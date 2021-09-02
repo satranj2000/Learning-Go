@@ -38,8 +38,20 @@ type ListNode struct {
 	Next *ListNode
 }
 
-func IsPalindrome(head *ListNode) bool {
-	return true
+//https://leetcode.com/problems/reverse-linked-list/
+func ReverseList(head *ListNode) *ListNode {
+
+	var tempnode *ListNode
+	var tempnodeprev *ListNode
+	tempnodeprev = nil
+
+	for head != nil {
+		tempnode = head.Next
+		head.Next = tempnodeprev
+		tempnodeprev = head
+		head = tempnode
+	}
+	return tempnodeprev
 }
 
 //https://leetcode.com/problems/odd-even-linked-list/

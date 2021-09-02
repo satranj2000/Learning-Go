@@ -870,17 +870,3 @@ func MinimumDifference(nums []int, k int) int {
 	}
 	return minval
 }
-
-//https://leetcode.com/problems/find-the-kth-largest-integer-in-the-array/
-func KthLargestNumber(nums []string, k int) string {
-	inums := make([]int, len(nums))
-
-	for i, v := range nums {
-		n, _ := strconv.Atof(v)
-		inums[i] = n
-	}
-	sort.Ints(inums)
-
-	return strconv.Itoa(inums[len(inums)-k])
-
-}

@@ -2,22 +2,6 @@ package datastructs
 
 import "testing"
 
-func TestIsPalindrome(t *testing.T) {
-	head := ListNode{Val: 1, Next: nil}
-	node2 := ListNode{Val: 2, Next: nil}
-	node3 := ListNode{Val: 2, Next: nil}
-	node4 := ListNode{Val: 1, Next: nil}
-	head.Next = &node2
-	node2.Next = &node3
-	node3.Next = &node4
-
-	res := IsPalindrome(&head)
-	if res != true {
-		t.Errorf("Wrongly identified as not a palindrome for the values [1 2 2 1]")
-	}
-
-}
-
 func TestOddEvenList(t *testing.T) {
 	head := ListNode{Val: 1, Next: nil}
 	node2 := ListNode{Val: 2, Next: nil}
@@ -115,5 +99,57 @@ func TestBrowserHistory(t *testing.T) {
 	param_2 = obj.Back(1)
 	if param_2 != "google.com" {
 		t.Errorf("Expected google.com, got %v", param_2)
+	}
+}
+
+func TestReverseList(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+	node3 := ListNode{Val: 3, Next: nil}
+
+	outvalues := []int{3, 2, 1}
+
+	head.Next = &node2
+	node2.Next = &node3
+
+	revhead := ReverseList(&head)
+	out := revhead.AsArray()
+
+	for i := 0; i < len(outvalues); i++ {
+		if out[i] != outvalues[i] {
+			t.Errorf("Expected %v, got %v", outvalues[i], out[i])
+		}
+	}
+}
+
+func TestReverseList2(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	outvalues := []int{1}
+
+	revhead := ReverseList(&head)
+	out := revhead.AsArray()
+
+	for i := 0; i < len(outvalues); i++ {
+		if out[i] != outvalues[i] {
+			t.Errorf("Expected %v, got %v", outvalues[i], out[i])
+		}
+	}
+}
+
+func TestReverseList3(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+
+	outvalues := []int{2, 1}
+
+	head.Next = &node2
+
+	revhead := ReverseList(&head)
+	out := revhead.AsArray()
+
+	for i := 0; i < len(outvalues); i++ {
+		if out[i] != outvalues[i] {
+			t.Errorf("Expected %v, got %v", outvalues[i], out[i])
+		}
 	}
 }

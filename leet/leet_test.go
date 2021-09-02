@@ -177,21 +177,3 @@ func TestMinimumDifference(t *testing.T) {
 		}
 	}
 }
-
-func TestKthLargestNumber(t *testing.T) {
-
-	res := leet.KthLargestNumber([]string{"2", "21", "12", "1"}, 3)
-	if res != "2" {
-		t.Errorf("Expected 2, got %v", res)
-	}
-
-	res = leet.KthLargestNumber([]string{"3", "6", "7", "10"}, 4)
-	if res != "3" {
-		t.Errorf("Expected 3, got %v", res)
-	}
-
-	res = leet.KthLargestNumber([]string{"0", "0"}, 2)
-	if res != "0" {
-		t.Errorf("Expected 0, got %v", res)
-	}
-}

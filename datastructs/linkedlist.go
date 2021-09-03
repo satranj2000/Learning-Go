@@ -54,6 +54,73 @@ func ReverseList(head *ListNode) *ListNode {
 	return tempnodeprev
 }
 
+// return both head and last node
+func ReverseList2(head *ListNode) (*ListNode, *ListNode) {
+	newtail := head
+	var tempnode *ListNode
+	var tempnodeprev *ListNode
+	tempnodeprev = nil
+
+	for head != nil {
+		tempnode = head.Next
+		head.Next = tempnodeprev
+		tempnodeprev = head
+		head = tempnode
+	}
+	return tempnodeprev, newtail
+}
+
+//https://leetcode.com/problems/reverse-linked-list-ii/
+func ReverseBetween(head *ListNode, left int, right int) *ListNode {
+
+	runner := 1
+	originhead := head // store the pointer to original head
+
+	//left most node is pointer to the first node in the inner list (between left and right)
+	var leftmostnode *ListNode
+	// left node minus one - keeps track of node where we need to link back to
+	var leftmostnodeminusone *ListNode
+	leftmostnodeminusone = nil
+
+	var rightmostnode *ListNode
+	var rightmostnodeplusone *ListNode
+	rightmostnodeplusone = nil
+
+	for head != nil {
+		if runner == left {
+			leftmostnode = head
+		}
+		if runner == left-1 {
+			leftmostnodeminusone = head
+		}
+		if runner == right {
+			rightmostnode = head
+		}
+		if runner == right+1 {
+			rightmostnodeplusone = head
+		}
+		runner++
+		head = head.Next
+	}
+	if leftmostnodeminusone != nil {
+		leftmostnodeminusone.Next = nil
+	}
+	rightmostnode.Next = nil
+
+	revlisthead, revlisttail := ReverseList2(leftmostnode)
+
+	if leftmostnodeminusone != nil {
+		leftmostnodeminusone.Next = revlisthead
+	}
+	revlisttail.Next = rightmostnodeplusone
+
+	if leftmostnodeminusone != nil {
+		return originhead
+	} else {
+		return revlisthead
+	}
+}
+
 //https://leetcode.com/problems/odd-even-linked-list/
 func OddEvenList(head *ListNode) *ListNode {
 	oddlist := &ListNode{}

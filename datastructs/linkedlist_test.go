@@ -153,3 +153,112 @@ func TestReverseList3(t *testing.T) {
 		}
 	}
 }
+
+func TestReverseBetween(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+	node3 := ListNode{Val: 3, Next: nil}
+	node4 := ListNode{Val: 4, Next: nil}
+	node5 := ListNode{Val: 5, Next: nil}
+
+	outvalues := []int{1, 4, 3, 2, 5}
+	left := 2
+	right := 4
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	retlist := ReverseBetween(&head, left, right)
+
+	retvalues := retlist.AsArray()
+
+	for i := 0; i < len(outvalues); i++ {
+		if retvalues[i] != outvalues[i] {
+			t.Errorf("Expected %v, got %v", outvalues[i], retvalues[i])
+		}
+	}
+
+}
+
+func TestReverseBetween2(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+	node3 := ListNode{Val: 3, Next: nil}
+	node4 := ListNode{Val: 4, Next: nil}
+	node5 := ListNode{Val: 5, Next: nil}
+
+	outvalues := []int{4, 3, 2, 1, 5}
+	left := 1 // left value is same as origin
+	right := 4
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	retlist := ReverseBetween(&head, left, right)
+
+	retvalues := retlist.AsArray()
+
+	for i := 0; i < len(outvalues); i++ {
+		if retvalues[i] != outvalues[i] {
+			t.Errorf("Expected %v, got %v", outvalues[i], retvalues[i])
+		}
+	}
+}
+
+func TestReverseBetween3(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+	node3 := ListNode{Val: 3, Next: nil}
+	node4 := ListNode{Val: 4, Next: nil}
+	node5 := ListNode{Val: 5, Next: nil}
+
+	outvalues := []int{5, 4, 3, 2, 1}
+	left := 1  //left is same as origin
+	right := 5 // right is same as tail
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	retlist := ReverseBetween(&head, left, right)
+
+	retvalues := retlist.AsArray()
+
+	for i := 0; i < len(outvalues); i++ {
+		if retvalues[i] != outvalues[i] {
+			t.Errorf("Expected %v, got %v", outvalues[i], retvalues[i])
+		}
+	}
+}
+
+func TestReverseBetween4(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+	node3 := ListNode{Val: 3, Next: nil}
+	node4 := ListNode{Val: 4, Next: nil}
+	node5 := ListNode{Val: 5, Next: nil}
+
+	outvalues := []int{1, 2, 3, 4, 5}
+	left := 3 //left and right as same value
+	right := 3
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	retlist := ReverseBetween(&head, left, right)
+
+	retvalues := retlist.AsArray()
+
+	for i := 0; i < len(outvalues); i++ {
+		if retvalues[i] != outvalues[i] {
+			t.Errorf("Expected %v, got %v", outvalues[i], retvalues[i])
+		}
+	}
+}

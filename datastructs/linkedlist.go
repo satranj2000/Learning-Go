@@ -182,6 +182,71 @@ func (node *ListNode) AsArray() []int {
 	return iArr
 }
 
+//https://leetcode.com/problems/rotate-list/
+func RotateRight(head *ListNode, k int) *ListNode {
+
+	// first find the length of the list.
+	var tail *ListNode
+	var newhead *ListNode
+
+	if k == 0 {
+		return head
+	}
+
+	originhead := head
+	len := 0
+	runner := 0
+	// calculate the length of the linked list.
+	for head != nil {
+		if head.Next == nil {
+			tail = head
+			runner++
+			break
+		}
+		head = head.Next
+		runner++
+	}
+
+	// if the input linked list length is zero, return back the head.
+	if runner == 0 {
+		return head
+	}
+
+	len = runner
+	posToCut := 0
+	//set the position where to cut.
+	// if it is greater than length, take reminder
+	if k < len {
+		posToCut = len - k
+	} else {
+		posToCut = len - (k % len)
+	}
+
+	// after calculation if it ends up that position to cut is zero or length of linked list,
+	// return back the head
+	if posToCut == 0 || posToCut == len {
+		return originhead
+	}
+
+	// start from one in this case.
+	runner = 1
+	head = originhead
+	for head != nil {
+		// as soon as we arrive at the position to cut, make the next to nil and set next as new head.
+		if runner == posToCut {
+			newhead = head.Next
+			head.Next = nil
+			break
+		}
+		head = head.Next
+		runner++
+	}
+
+	tail.Next = originhead
+	head = newhead
+	return newhead
+}
+
 //https://leetcode.com/problems/design-browser-history/
 type BrowserHistory struct {
 	url  string

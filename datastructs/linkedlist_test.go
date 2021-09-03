@@ -262,3 +262,97 @@ func TestReverseBetween4(t *testing.T) {
 		}
 	}
 }
+
+func TestRotateRight(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+	node3 := ListNode{Val: 3, Next: nil}
+	node4 := ListNode{Val: 4, Next: nil}
+	node5 := ListNode{Val: 5, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	outputs := []int{4, 5, 1, 2, 3}
+	rotate := 2
+
+	result := RotateRight(&head, rotate)
+	resultArr := result.AsArray()
+
+	for j := 0; j < len(outputs); j++ {
+		if outputs[j] != resultArr[j] {
+			t.Errorf("Expected %v, got %v ", resultArr[j], outputs[j])
+		}
+	}
+
+}
+
+func TestRotateRight2(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+	node3 := ListNode{Val: 3, Next: nil}
+	node4 := ListNode{Val: 4, Next: nil}
+	node5 := ListNode{Val: 5, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	outputs := []int{2, 3, 4, 5, 1}
+	rotate := 4
+
+	result := RotateRight(&head, rotate)
+	resultArr := result.AsArray()
+
+	for j := 0; j < len(outputs); j++ {
+		if outputs[j] != resultArr[j] {
+			t.Errorf("Expected %v, got %v ", resultArr[j], outputs[j])
+		}
+	}
+
+}
+
+func TestRotateRight3(t *testing.T) {
+	head := ListNode{Val: 0, Next: nil}
+	node2 := ListNode{Val: 1, Next: nil}
+
+	head.Next = &node2
+
+	outputs := []int{0, 1}
+	rotate := 1000
+
+	result := RotateRight(&head, rotate)
+	resultArr := result.AsArray()
+
+	for j := 0; j < len(outputs); j++ {
+		if outputs[j] != resultArr[j] {
+			t.Errorf("Expected %v, got %v ", resultArr[j], outputs[j])
+		}
+	}
+
+}
+
+func TestRotateRight4(t *testing.T) {
+	head := ListNode{Val: 0, Next: nil}
+	node2 := ListNode{Val: 1, Next: nil}
+	node3 := ListNode{Val: 2, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+
+	outputs := []int{2, 0, 1}
+	rotate := 4
+
+	result := RotateRight(&head, rotate)
+	resultArr := result.AsArray()
+
+	for j := 0; j < len(outputs); j++ {
+		if outputs[j] != resultArr[j] {
+			t.Errorf("Expected %v, got %v ", outputs[j], resultArr[j])
+		}
+	}
+
+}

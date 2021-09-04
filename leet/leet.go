@@ -870,3 +870,15 @@ func MinimumDifference(nums []int, k int) int {
 	}
 	return minval
 }
+
+//https://leetcode.com/problems/number-of-strings-that-appear-as-substrings-in-word/submissions/
+func NumOfStrings(patterns []string, word string) int {
+
+	cnt := 0
+	for _, s := range patterns {
+		if strings.Contains(word, s) {
+			cnt++
+		}
+	}
+	return cnt
+}

@@ -882,3 +882,33 @@ func NumOfStrings(patterns []string, word string) int {
 	}
 	return cnt
 }
+
+//https://leetcode.com/problems/check-if-word-equals-summation-of-two-words/
+func IsSumEqual(firstWord string, secondWord string, targetWord string) bool {
+	firstWordNum := 0
+	firstWordNumStr := make([]byte, len(firstWord))
+
+	secondWordNum := 0
+	secondWordNumStr := make([]byte, len(secondWord))
+
+	targetWordNum := 0
+	targetWordNumStr := make([]byte, len(targetWord))
+
+	for i, w := range firstWord {
+		firstWordNumStr[i] = byte(w) - 97
+	}
+	firstWordNum, _ = strconv.Atoi(string(firstWordNumStr))
+
+	for i, w := range secondWord {
+		secondWordNumStr[i] = byte(w) - 97
+	}
+	secondWordNum, _ = strconv.Atoi(string(firstWordNumStr))
+
+	for i, w := range targetWord {
+		targetWordNumStr[i] = byte(w) - 97
+	}
+	str := string(targetWordNumStr)
+	targetWordNum, _ = strconv.Atoi(str)
+
+	return (firstWordNum + secondWordNum) == targetWordNum
+}

@@ -307,3 +307,34 @@ func (this *BrowserHistory) Forward(steps int) string {
 		return ""
 	}
 }
+
+//https://leetcode.com/problems/merge-in-between-linked-lists/
+// merge linked list
+func MergeInBetween(list1 *ListNode, a int, b int, list2 *ListNode) *ListNode {
+	run := 0
+	originallist1 := list1
+	var aNode *ListNode
+	var bNode *ListNode
+	aNode, bNode = nil, nil
+
+	for list1 != nil {
+		if run == a-1 {
+			aNode = list1
+		}
+		if run == b {
+			bNode = list1
+		}
+		list1 = list1.Next
+		run++
+	}
+
+	aNode.Next = list2
+
+	for list2.Next != nil {
+		list2 = list2.Next
+	}
+
+	list2.Next = bNode.Next
+
+	return originallist1
+}

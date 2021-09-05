@@ -177,3 +177,21 @@ func TestMinimumDifference(t *testing.T) {
 		}
 	}
 }
+
+func TestIsSumEqual(t *testing.T) {
+
+	res := leet.IsSumEqual("acb", "cba", "cdb")
+	if !res {
+		t.Errorf("Expected sum to be true but got False")
+	}
+
+	res = leet.IsSumEqual("aaa", "a", "aab")
+	if res {
+		t.Errorf("Expected sum to be false but got True")
+	}
+
+	res = leet.IsSumEqual("aaa", "a", "aaaa")
+	if !res {
+		t.Errorf("Expected sum to be true but got False")
+	}
+}

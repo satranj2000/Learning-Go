@@ -356,3 +356,79 @@ func TestRotateRight4(t *testing.T) {
 	}
 
 }
+
+func TestMergeInBetween(t *testing.T) {
+	//list 1
+	head := ListNode{Val: 0, Next: nil}
+	node2 := ListNode{Val: 1, Next: nil}
+	node3 := ListNode{Val: 2, Next: nil}
+	node4 := ListNode{Val: 3, Next: nil}
+	node5 := ListNode{Val: 4, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	//list 2
+	ahead := ListNode{Val: 10, Next: nil}
+	anode2 := ListNode{Val: 11, Next: nil}
+	anode3 := ListNode{Val: 21, Next: nil}
+	anode4 := ListNode{Val: 31, Next: nil}
+	anode5 := ListNode{Val: 41, Next: nil}
+
+	ahead.Next = &anode2
+	anode2.Next = &anode3
+	anode3.Next = &anode4
+	anode4.Next = &anode5
+
+	res := MergeInBetween(&head, 2, 3, &ahead)
+
+	outvalues := res.AsArray()
+
+	expectedOuts := []int{0, 1, 10, 11, 21, 31, 41, 4}
+
+	for i := 0; i < len(expectedOuts); i++ {
+		if expectedOuts[i] != outvalues[i] {
+			t.Errorf("Expected %v, got %v", expectedOuts[i], outvalues[i])
+		}
+	}
+}
+
+func TestMergeInBetween2(t *testing.T) {
+	//list 1
+	head := ListNode{Val: 0, Next: nil}
+	node2 := ListNode{Val: 1, Next: nil}
+	node3 := ListNode{Val: 2, Next: nil}
+	node4 := ListNode{Val: 3, Next: nil}
+	node5 := ListNode{Val: 4, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	//list 2
+	ahead := ListNode{Val: 10, Next: nil}
+	anode2 := ListNode{Val: 11, Next: nil}
+	anode3 := ListNode{Val: 21, Next: nil}
+	anode4 := ListNode{Val: 31, Next: nil}
+	anode5 := ListNode{Val: 41, Next: nil}
+
+	ahead.Next = &anode2
+	anode2.Next = &anode3
+	anode3.Next = &anode4
+	anode4.Next = &anode5
+
+	res := MergeInBetween(&head, 3, 4, &ahead)
+
+	outvalues := res.AsArray()
+
+	expectedOuts := []int{0, 1, 2, 10, 11, 21, 31, 41}
+
+	for i := 0; i < len(expectedOuts); i++ {
+		if expectedOuts[i] != outvalues[i] {
+			t.Errorf("Expected %v, got %v", expectedOuts[i], outvalues[i])
+		}
+	}
+}

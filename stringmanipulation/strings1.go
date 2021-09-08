@@ -485,3 +485,24 @@ func IsPrefixString(s string, words []string) bool {
 	return false
 
 }
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+//https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/
+func GetDecimalValue(head *ListNode) int {
+	boolStr := ""
+	for head != nil {
+		if head.Val == 1 {
+			boolStr = boolStr + "1"
+		} else {
+			boolStr = boolStr + "0"
+		}
+
+		head = head.Next
+	}
+	val, _ := strconv.ParseInt(boolStr, 2, 0)
+	return int(val)
+}

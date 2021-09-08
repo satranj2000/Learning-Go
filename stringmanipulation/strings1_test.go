@@ -174,3 +174,81 @@ func TestIsPrefixString(t *testing.T) {
 		t.Errorf("Expected true")
 	}
 }
+
+func TestGetDecimalValue(t *testing.T) {
+	head := stringmanipulation.ListNode{Val: 1, Next: nil}
+	node2 := stringmanipulation.ListNode{Val: 0, Next: nil}
+	node3 := stringmanipulation.ListNode{Val: 1, Next: nil}
+	node4 := stringmanipulation.ListNode{Val: 1, Next: nil}
+	node5 := stringmanipulation.ListNode{Val: 0, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	res := stringmanipulation.GetDecimalValue(&head)
+	if res != 22 {
+		t.Errorf("Error. Got wrong output. Expected 22, got %v", res)
+	}
+}
+
+func TestGetDecimalValue2(t *testing.T) {
+	head := stringmanipulation.ListNode{Val: 1, Next: nil}
+	node2 := stringmanipulation.ListNode{Val: 0, Next: nil}
+
+	head.Next = &node2
+
+	res := stringmanipulation.GetDecimalValue(&head)
+	if res != 2 {
+		t.Errorf("Error. Got wrong output. Expected 2, got %v", res)
+	}
+}
+
+func TestGetDecimalValue3(t *testing.T) {
+	head := stringmanipulation.ListNode{Val: 0, Next: nil}
+	node2 := stringmanipulation.ListNode{Val: 0, Next: nil}
+
+	head.Next = &node2
+
+	res := stringmanipulation.GetDecimalValue(&head)
+	if res != 3 {
+		t.Errorf("Error. Got wrong output. Expected 0, got %v", res)
+	}
+}
+
+func TestGetDecimalValue4(t *testing.T) {
+	head := stringmanipulation.ListNode{Val: 1, Next: nil}
+	node2 := stringmanipulation.ListNode{Val: 1, Next: nil}
+	node3 := stringmanipulation.ListNode{Val: 1, Next: nil}
+	node4 := stringmanipulation.ListNode{Val: 1, Next: nil}
+	node5 := stringmanipulation.ListNode{Val: 1, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	res := stringmanipulation.GetDecimalValue(&head)
+	if res != 31 {
+		t.Errorf("Error. Got wrong output. Expected 31, got %v", res)
+	}
+}
+
+func TestGetDecimalValue5(t *testing.T) {
+	head := stringmanipulation.ListNode{Val: 0, Next: nil}
+	node2 := stringmanipulation.ListNode{Val: 0, Next: nil}
+	node3 := stringmanipulation.ListNode{Val: 0, Next: nil}
+	node4 := stringmanipulation.ListNode{Val: 0, Next: nil}
+	node5 := stringmanipulation.ListNode{Val: 0, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	res := stringmanipulation.GetDecimalValue(&head)
+	if res != 0 {
+		t.Errorf("Error. Got wrong output. Expected 0, got %v", res)
+	}
+}

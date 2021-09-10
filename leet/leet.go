@@ -912,3 +912,147 @@ func IsSumEqual(firstWord string, secondWord string, targetWord string) bool {
 
 	return (firstWordNum + secondWordNum) == targetWordNum
 }
+
+func TwoSum(nums []int, target int) []int {
+
+	targArr := [2]int{-1, -1}
+	l := len(nums)
+	targetMet := false
+	for i := 0; i < l-1; i++ {
+		for j := i + 1; j < l; j++ {
+			if nums[i]+nums[j] == target {
+				targArr[0] = i
+				targArr[1] = j
+				targetMet = true
+				break
+			}
+		}
+		// exit the outer loop as well if target is met.
+		if targetMet {
+			break
+		}
+	}
+
+	return targArr[:]
+
+}
+
+//https://leetcode.com/problems/merge-sorted-array/
+func MergeWithin(nums1 []int, m int, nums2 []int, n int) {
+
+	k := m + n - 1
+	i := m - 1
+	j := n - 1
+
+	for k >= 0 {
+		if j == -1 {
+			break
+		}
+		if i == -1 {
+			for k >= 0 {
+				nums1[k] = nums2[j]
+				k--
+				j--
+			}
+			break
+		}
+		if nums1[i] > nums2[j] {
+			nums1[k] = nums1[i]
+			k--
+			i--
+		} else {
+			nums1[k] = nums2[j]
+			k--
+			j--
+		}
+
+	}
+}
+
+//https://leetcode.com/problems/intersection-of-two-arrays-ii/
+func Intersect(nums1 []int, nums2 []int) []int {
+
+	sort.Ints(nums1)
+	sort.Ints(nums2)
+
+	lnums1 := len(nums1)
+	lnums2 := len(nums2)
+
+	intNums := make([]int, 0, lnums1+lnums2)
+
+	j := 0
+	for i := 0; i < lnums1; {
+		if nums1[i] == nums2[j] {
+			intNums = append(intNums, nums1[i])
+			i++
+			j++
+		} else {
+			if nums1[i] < nums2[j] {
+				i++
+			} else {
+				j++
+			}
+		}
+		if j >= lnums2 {
+			break
+		}
+
+	}
+	return intNums
+}
+
+//https://leetcode.com/problems/intersection-of-two-arrays/
+// only return unique values.
+func IntersectionUnique(nums1 []int, nums2 []int) []int {
+
+	sort.Ints(nums1)
+	sort.Ints(nums2)
+
+	lnums1 := len(nums1)
+	lnums2 := len(nums2)
+
+	intNums := make([]int, 0, lnums1+lnums2)
+
+	j := 0
+	for i := 0; i < lnums1; {
+		if nums1[i] == nums2[j] {
+			val := nums1[i]
+			intNums = append(intNums, val)
+			for i < lnums1 && nums1[i] == val {
+				i++
+			}
+			for j < lnums2 && nums2[j] == val {
+				j++
+			}
+		} else {
+			if nums1[i] < nums2[j] {
+				i++
+			} else {
+				j++
+			}
+		}
+		if j >= lnums2 {
+			break
+		}
+
+	}
+	return intNums
+
+}
+
+//https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+func MaxProfit(prices []int) int {
+
+	max := 0.0
+	l := len(prices)
+
+	// o(n2) - so, this might be considered slow. need to find alternatives.
+	for i := 0; i < l; i++ {
+		for j := i; j < l; j++ {
+			if prices[i] < prices[j] {
+				max = math.Max(max, float64(prices[j]-prices[i]))
+			}
+		}
+	}
+	return int(max)
+}

@@ -195,3 +195,181 @@ func TestIsSumEqual(t *testing.T) {
 		t.Errorf("Expected sum to be true but got False")
 	}
 }
+
+func TestTwoSum(t *testing.T) {
+	//assumption is that there is only one valid answer.
+	inputs := [][]int{
+		{2, 7, 11, 15},
+		{3, 2, 4},
+		{3, 3},
+		{30, 2, 5, 3, 9},
+		{0, 40, 20, 0}, // important test case for 0 value
+		{-1, -2, -3, -4},
+	}
+	inputTargets := []int{9, 6, 6, 12, 0, -5}
+
+	outputs := [][]int{
+		{0, 1},
+		{1, 2},
+		{0, 1},
+		{3, 4},
+		{0, 3},
+		{0, 3},
+	}
+
+	for i, v := range inputs {
+		res := leet.TwoSum(v, inputTargets[i])
+
+		if res[0] != outputs[i][0] || res[1] != outputs[i][1] {
+			t.Errorf("Expected %v, got %v for the test #%v", outputs[i], res, i)
+		}
+	}
+}
+
+func TestMergeWithin(t *testing.T) {
+	inputsMArr := [][]int{
+		{1, 2, 3, 0, 0, 0},
+		{1},
+		{0},
+		{-8, -4, -3, 0, 0, 0}, // all negatives test case
+		{1, 1, 0, 0},          // all similar numbers
+		{0, 0, 0, 0},          // all zeros test case.
+	}
+	inputsM := []int{3, 1, 0, 3, 2, 2}
+
+	inputsNArr := [][]int{
+		{2, 5, 6},
+		{},
+		{1},
+		{-7, -6, -5},
+		{1, 1},
+		{3, 4},
+	}
+	inputsN := []int{3, 0, 1, 3, 2, 2}
+
+	outputs := [][]int{
+		{1, 2, 2, 3, 5, 6},
+		{1},
+		{1},
+		{-8, -7, -6, -5, -4, -3},
+		{1, 1, 1, 1},
+		{0, 0, 3, 4},
+	}
+
+	for i := range inputsMArr {
+		leet.MergeWithin(inputsMArr[i], inputsM[i], inputsNArr[i], inputsN[i])
+
+		if !CompareArrayValues(inputsMArr[i], outputs[i]) {
+			t.Errorf("Wrong result for the input %v", i)
+		}
+
+	}
+}
+
+func CompareArrayValues(a []int, b []int) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i, v := range a {
+		if v != b[i] {
+			return false
+		}
+	}
+	return true
+}
+
+func TestIntersect(t *testing.T) {
+	nums1 := [][]int{
+		{1, 2, 2, 1},
+		{4, 9, 5},
+		{10, 20, 30},
+		{1},
+		{1, 2, 3, 4, 5, 5},
+		{5, 4, 5, 4},
+		{3, 3, 3, 4, 4, 4, 5},
+		{1},
+		{4, 5, 3},
+		{5},
+	}
+
+	nums2 := [][]int{
+		{2, 2},
+		{9, 4, 9, 8, 4},
+		{40, 50},
+		{9, 8, 7, 6, 5, 1},
+		{1, 2, 3, 5, 4},
+		{4, 5, 4, 5},
+		{3, 4, 4, 4, 10},
+		{1},
+		{3},
+		{3, 5, 4},
+	}
+
+	outputs := [][]int{
+		{2, 2},
+		{4, 9},
+		{},
+		{1},
+		{1, 2, 3, 4, 5},
+		{4, 4, 5, 5},
+		{3, 4, 4, 4},
+		{1},
+		{3},
+		{5},
+	}
+
+	for i := range nums1 {
+		res := leet.Intersect(nums1[i], nums2[i])
+		if !CompareArrayValues(res, outputs[i]) {
+			t.Errorf("Expected %v, got %v", res, outputs[i])
+		}
+	}
+}
+
+func TestIntersectUnique(t *testing.T) {
+	nums1 := [][]int{
+		{1, 2, 2, 1},
+		{4, 9, 5},
+		{10, 20, 30},
+		{1},
+		{1, 2, 3, 4, 5, 5},
+		{5, 4, 5, 4},
+		{3, 3, 3, 4, 4, 4, 5},
+		{1},
+		{4, 5, 3},
+		{5},
+	}
+
+	nums2 := [][]int{
+		{2, 2},
+		{9, 4, 9, 8, 4},
+		{40, 50},
+		{9, 8, 7, 6, 5, 1},
+		{1, 2, 3, 5, 4},
+		{4, 5, 4, 5},
+		{3, 4, 4, 4, 10},
+		{1},
+		{3},
+		{3, 5, 4},
+	}
+
+	outputs := [][]int{
+		{2},
+		{4, 9},
+		{},
+		{1},
+		{1, 2, 3, 4, 5},
+		{4, 5},
+		{3, 4},
+		{1},
+		{3},
+		{5},
+	}
+
+	for i := range nums1 {
+		res := leet.IntersectionUnique(nums1[i], nums2[i])
+		if !CompareArrayValues(res, outputs[i]) {
+			t.Errorf("Expected %v, got %v", res, outputs[i])
+		}
+	}
+}

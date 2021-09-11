@@ -373,3 +373,59 @@ func TestIntersectUnique(t *testing.T) {
 		}
 	}
 }
+
+func TestMatrixReshape(t *testing.T) {
+	input := [][]int{
+		{1, 2},
+		{3, 4},
+	}
+
+	output := []int{
+		1, 2, 3, 4,
+	}
+
+	res := leet.MatrixReshape(input, 1, 4)
+
+	if !CompareArrayValues(res[0], output) {
+		t.Errorf("Did not match the output")
+	}
+}
+
+func TestMatrixReshape2(t *testing.T) {
+	input := [][]int{
+		{1, 2},
+		{3, 4},
+	}
+
+	output := [][]int{
+		{1, 2},
+		{3, 4},
+	}
+
+	res := leet.MatrixReshape(input, 2, 2)
+
+	if !Compare2dArrayValues(res, output) {
+		t.Errorf("Did not match the output")
+	}
+}
+
+func Compare2dArrayValues(x [][]int, y [][]int) bool {
+	rx := len(x)
+	cx := len(x[0])
+
+	ry := len(y)
+	cy := len(y[0])
+
+	if rx != ry || cx != cy {
+		return false
+	}
+
+	for i := 0; i < rx; i++ {
+		for j := 0; j < cx; j++ {
+			if x[i][j] != y[i][j] {
+				return false
+			}
+		}
+	}
+	return true
+}

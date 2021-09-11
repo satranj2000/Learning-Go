@@ -1072,3 +1072,46 @@ func MaxProfit2(prices []int) int {
 	}
 	return int(maxsofar)
 }
+
+//https://leetcode.com/problems/reshape-the-matrix/submissions/
+func MatrixReshape(mat [][]int, r int, c int) [][]int {
+
+	inColSiz := len(mat[0])
+	inRowSiz := len(mat)
+
+	// does not match, return same matrix
+	if inColSiz*inRowSiz != r*c {
+		return mat
+	}
+
+	// same size ; return same matrix.
+	if r == inRowSiz && c == inColSiz {
+		return mat
+	}
+
+	outmat := make([][]int, r)
+	currRow := 0
+	currCol := 0
+
+	for i := 0; i < inRowSiz; i++ {
+		for j := 0; j < inColSiz; j++ {
+			if currCol == 0 {
+				outmat[currRow] = make([]int, c)
+				outmat[currRow][currCol] = mat[i][j]
+			} else {
+				if currCol < c {
+					outmat[currRow][currCol] = mat[i][j]
+				} else {
+					currRow++
+					currCol = 0
+					outmat[currRow] = make([]int, c)
+					outmat[currRow][currCol] = mat[i][j]
+
+				}
+
+			}
+			currCol++
+		}
+	}
+	return outmat
+}

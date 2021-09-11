@@ -660,7 +660,7 @@ func FrequencySort(s string) string {
 	}
 	revfreqMap := reverseMap(freqMap)
 	sortKeys := make([]int, 0, len(revfreqMap))
-	for k, _ := range revfreqMap {
+	for k := range revfreqMap {
 		sortKeys = append(sortKeys, k)
 	}
 	sort.Ints(sortKeys)
@@ -768,7 +768,7 @@ func FrequencyIntSort(nums []int) []int {
 	}
 	revfreqMap := reverseIntMap(freqMap)
 	sortKeys := make([]int, 0, len(revfreqMap))
-	for k, _ := range revfreqMap {
+	for k := range revfreqMap {
 		sortKeys = append(sortKeys, k)
 	}
 	sort.Ints(sortKeys)
@@ -803,7 +803,7 @@ func ThirdMaxDistinct(nums []int) int {
 	}
 	//revfreqMap := reverseIntMap(freqMap)
 	sortKeys := make([]int, 0, len(freqMap))
-	for k, _ := range freqMap {
+	for k := range freqMap {
 		sortKeys = append(sortKeys, k)
 	}
 	sort.Ints(sortKeys)
@@ -1055,4 +1055,20 @@ func MaxProfit(prices []int) int {
 		}
 	}
 	return int(max)
+}
+
+// same question as above. but, using kadane's algorithm.
+func MaxProfit2(prices []int) int {
+	curmax := 0.0
+	maxsofar := 0.0
+	l := len(prices)
+
+	for i := 1; i < l; i++ {
+		diff := prices[i] - prices[i-1]
+		curmax += float64(diff)
+		curmax = math.Max(0.0, curmax)
+		maxsofar = math.Max(curmax, maxsofar)
+
+	}
+	return int(maxsofar)
 }

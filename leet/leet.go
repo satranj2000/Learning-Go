@@ -1115,3 +1115,94 @@ func MatrixReshape(mat [][]int, r int, c int) [][]int {
 	}
 	return outmat
 }
+
+func IsValidSudoku(board [][]byte) bool {
+
+	// check for rows.
+	for _, r := range board {
+		valCntMap := make(map[byte]int, 9)
+		for _, v := range r {
+			if v == '.' {
+				continue
+			}
+			if _, ok := valCntMap[v]; ok {
+				return false
+			} else {
+				valCntMap[v] = 1
+			}
+		}
+	}
+
+	// check for columns
+	for c := 0; c < 9; c++ {
+		valCntMap := make(map[byte]int, 9)
+		for r := 0; r < 9; r++ {
+			v := board[r][c]
+			if v == '.' {
+				continue
+			}
+			if _, ok := valCntMap[v]; ok {
+				return false
+			} else {
+				valCntMap[v] = 1
+			}
+		}
+	}
+
+	// for a block of 3 x 3
+	for r := 0; r < 9; r += 3 {
+		for c := 0; c < 9; c += 3 {
+			valCntMap := make(map[byte]int, 9)
+			for i := r; i < r+3; i++ {
+				for j := c; j < c+3; j++ {
+					v := board[i][j]
+					if v == '.' {
+						continue
+					}
+					if _, ok := valCntMap[v]; ok {
+						return false
+					} else {
+						valCntMap[v] = 1
+					}
+				}
+			}
+		}
+	}
+
+	return true
+}
+
+//https://leetcode.com/problems/ransom-note/
+func CanConstruct(ransomNote string, magazine string) bool {
+
+	magmap := make(map[rune]int)
+	for _, c := range magazine {
+		_, ok := magmap[c]
+		if ok {
+			magmap[c] = magmap[c] + 1
+		} else {
+			magmap[c] = 1
+		}
+	}
+
+	ranmap := make(map[rune]int)
+	for _, c := range ransomNote {
+		_, ok := ranmap[c]
+		if ok {
+			ranmap[c] = ranmap[c] + 1
+		} else {
+			ranmap[c] = 1
+		}
+	}
+
+	for k, v := range ranmap {
+		if v2, ok := magmap[k]; ok {
+			if v > v2 {
+				return false
+			}
+		} else {
+			return false
+		}
+	}
+	return true
+}

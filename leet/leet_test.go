@@ -429,3 +429,99 @@ func Compare2dArrayValues(x [][]int, y [][]int) bool {
 	}
 	return true
 }
+
+func TestIsValidSudoku(t *testing.T) {
+	board := [][]byte{
+		{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+		{'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+		{'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+		{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+		{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+		{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+		{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+		{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+		{'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+	}
+
+	res := leet.IsValidSudoku(board)
+
+	if !res {
+		t.Error("Expected the board to be a valid Sudoko. Returned it as invalid")
+	}
+}
+
+func TestIsValidSudoku2(t *testing.T) {
+	// first board has duplicates. So, it should return false (2 9s)
+	board := [][]byte{
+		{'9', '3', '.', '.', '7', '.', '.', '.', '.'},
+		{'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+		{'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+		{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+		{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+		{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+		{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+		{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+		{'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+	}
+
+	res := leet.IsValidSudoku(board)
+
+	if res {
+		t.Error("Expected the board to be a invalid Sudoko. Returned it as Valid")
+	}
+}
+
+func TestIsValidSudoku3(t *testing.T) {
+	// second board has duplicates. So, it should return false (2 5s)
+	board := [][]byte{
+		{'1', '3', '.', '.', '7', '.', '.', '.', '.'},
+		{'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+		{'.', '9', '8', '5', '.', '.', '.', '6', '.'},
+		{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+		{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+		{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+		{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+		{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+		{'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+	}
+
+	res := leet.IsValidSudoku(board)
+
+	if res {
+		t.Error("Expected the board to be a invalid Sudoko. Returned it as Valid")
+	}
+}
+
+func TestCanConstruct(t *testing.T) {
+	ransomnotes := []string{
+		"a",
+		"aa",
+		"aa",
+		"xyzabc",
+		"xyzzabc",
+	}
+
+	magazines := []string{
+		"b",
+		"ab",
+		"aab",
+		"aaaabbbccccdddxxyyz",
+		"aaaabbbccccdddxxyyz",
+	}
+
+	results := []bool{
+		false,
+		false,
+		true,
+		true,
+		false,
+	}
+
+	for i, _ := range ransomnotes {
+		res := leet.CanConstruct(ransomnotes[i], magazines[i])
+		if res != results[i] {
+			t.Errorf("Did not return the expected value")
+		}
+	}
+
+}

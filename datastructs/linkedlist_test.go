@@ -1,6 +1,9 @@
 package datastructs
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestOddEvenList(t *testing.T) {
 	head := ListNode{Val: 1, Next: nil}
@@ -431,4 +434,289 @@ func TestMergeInBetween2(t *testing.T) {
 			t.Errorf("Expected %v, got %v", expectedOuts[i], outvalues[i])
 		}
 	}
+}
+
+func TestHasCycle(t *testing.T) {
+	head := ListNode{Val: 0, Next: nil}
+	node2 := ListNode{Val: 1, Next: nil}
+	node3 := ListNode{Val: 2, Next: nil}
+	node4 := ListNode{Val: 3, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node3
+
+	if !HasCycle(&head) {
+		t.Errorf("Expected true, but got false")
+	}
+}
+
+func TestHasCycle2(t *testing.T) {
+	head := ListNode{Val: 0, Next: nil}
+
+	if HasCycle(&head) {
+		t.Errorf("Expected false, but got tru")
+	}
+}
+
+func TestHasCycle3(t *testing.T) {
+	head := ListNode{Val: 0, Next: nil}
+	node2 := ListNode{Val: 1, Next: nil}
+	node3 := ListNode{Val: 2, Next: nil}
+	node4 := ListNode{Val: 3, Next: nil}
+	node5 := ListNode{Val: 4, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	if HasCycle(&head) {
+		t.Errorf("Expected false, but got true")
+	}
+}
+
+func TestMergeTwoLists(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+	node3 := ListNode{Val: 4, Next: nil}
+	node4 := ListNode{Val: 8, Next: nil}
+	node5 := ListNode{Val: 10, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	head2 := ListNode{Val: 1, Next: nil}
+	node22 := ListNode{Val: 3, Next: nil}
+	node23 := ListNode{Val: 4, Next: nil}
+	node24 := ListNode{Val: 9, Next: nil}
+	node25 := ListNode{Val: 11, Next: nil}
+
+	head2.Next = &node22
+	node22.Next = &node23
+	node23.Next = &node24
+	node24.Next = &node25
+
+	head3 := MergeTwoLists(&head, &head2)
+
+	fmt.Println(head3.AsArray())
+}
+
+func TestRemoveElements(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+	node3 := ListNode{Val: 4, Next: nil}
+	node4 := ListNode{Val: 8, Next: nil}
+	node5 := ListNode{Val: 10, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	outputs := []int{1, 2, 8, 10}
+
+	res := RemoveElements(&head, 4)
+	resArr := res.AsArray()
+
+	for i := 0; i < len(outputs); i++ {
+		if outputs[i] != resArr[i] {
+			t.Errorf("Expected %v, got %v", outputs, resArr)
+		}
+	}
+}
+
+func TestRemoveElements2(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 1, Next: nil}
+	node3 := ListNode{Val: 4, Next: nil}
+	node4 := ListNode{Val: 8, Next: nil}
+	node5 := ListNode{Val: 10, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	outputs := []int{4, 8, 10}
+
+	res := RemoveElements(&head, 1)
+	resArr := res.AsArray()
+
+	for i := 0; i < len(outputs); i++ {
+		if outputs[i] != resArr[i] {
+			t.Errorf("Expected %v, got %v", outputs, resArr)
+		}
+	}
+}
+
+func TestRemoveElements3(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 10, Next: nil}
+	node3 := ListNode{Val: 4, Next: nil}
+	node4 := ListNode{Val: 8, Next: nil}
+	node5 := ListNode{Val: 10, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	outputs := []int{1, 4, 8}
+
+	res := RemoveElements(&head, 10)
+	resArr := res.AsArray()
+
+	for i := 0; i < len(outputs); i++ {
+		if outputs[i] != resArr[i] {
+			t.Errorf("Expected %v, got %v", outputs, resArr)
+		}
+	}
+}
+
+func TestRemoveElements4(t *testing.T) {
+	head := ListNode{Val: 10, Next: nil}
+	node2 := ListNode{Val: 10, Next: nil}
+	node3 := ListNode{Val: 10, Next: nil}
+	node4 := ListNode{Val: 10, Next: nil}
+	node5 := ListNode{Val: 10, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	outputs := []int{}
+
+	res := RemoveElements(&head, 10)
+	resArr := res.AsArray()
+
+	for i := 0; i < len(outputs); i++ {
+		if outputs[i] != resArr[i] {
+			t.Errorf("Expected %v, got %v", outputs, resArr)
+		}
+	}
+}
+
+func TestDeleteDuplicates(t *testing.T) {
+	head := ListNode{Val: 10, Next: nil}
+	node2 := ListNode{Val: 10, Next: nil}
+	node3 := ListNode{Val: 10, Next: nil}
+	node4 := ListNode{Val: 10, Next: nil}
+	node5 := ListNode{Val: 10, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	outputs := []int{10}
+
+	res := DeleteDuplicates(&head)
+	resArr := res.AsArray()
+
+	for i := 0; i < len(outputs); i++ {
+		if outputs[i] != resArr[i] {
+			t.Errorf("Expected %v, got %v", outputs, resArr)
+		}
+	}
+
+}
+
+func TestDeleteDuplicates2(t *testing.T) {
+	head := ListNode{Val: 10, Next: nil}
+	node2 := ListNode{Val: 101, Next: nil}
+	node3 := ListNode{Val: 102, Next: nil}
+	node4 := ListNode{Val: 103, Next: nil}
+	node5 := ListNode{Val: 101, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	outputs := []int{10, 101, 102, 103}
+
+	res := DeleteDuplicates(&head)
+	resArr := res.AsArray()
+
+	for i := 0; i < len(outputs); i++ {
+		if outputs[i] != resArr[i] {
+			t.Errorf("Expected %v, got %v", outputs, resArr)
+		}
+	}
+
+}
+
+func TestDeleteDuplicates3(t *testing.T) {
+	head := ListNode{Val: 10, Next: nil}
+	node2 := ListNode{Val: 101, Next: nil}
+	node3 := ListNode{Val: 102, Next: nil}
+	node4 := ListNode{Val: 102, Next: nil}
+	node5 := ListNode{Val: 101, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	outputs := []int{10, 101}
+
+	res := DeleteDuplicates(&head)
+	resArr := res.AsArray()
+
+	for i := 0; i < len(outputs); i++ {
+		if outputs[i] != resArr[i] {
+			t.Errorf("Expected %v, got %v", outputs, resArr)
+		}
+	}
+
+}
+
+func TestDeleteDuplicates4(t *testing.T) {
+	head := ListNode{Val: 10, Next: nil}
+
+	outputs := []int{10}
+
+	res := DeleteDuplicates(&head)
+	resArr := res.AsArray()
+
+	for i := 0; i < len(outputs); i++ {
+		if outputs[i] != resArr[i] {
+			t.Errorf("Expected %v, got %v", outputs, resArr)
+		}
+	}
+
+}
+
+func TestDeleteDuplicates5(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+	node3 := ListNode{Val: 3, Next: nil}
+	node4 := ListNode{Val: 3, Next: nil}
+	node5 := ListNode{Val: 4, Next: nil}
+	node6 := ListNode{Val: 4, Next: nil}
+	node7 := ListNode{Val: 5, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+	node5.Next = &node6
+	node6.Next = &node7
+
+	outputs := []int{1, 2, 3, 4, 5}
+
+	res := DeleteDuplicates(&head)
+	resArr := res.AsArray()
+
+	for i := 0; i < len(outputs); i++ {
+		if outputs[i] != resArr[i] {
+			t.Errorf("Expected %v, got %v", outputs, resArr)
+		}
+	}
+
 }

@@ -338,3 +338,132 @@ func MergeInBetween(list1 *ListNode, a int, b int, list2 *ListNode) *ListNode {
 
 	return originallist1
 }
+
+// check for a loop in linked list. - https://leetcode.com/problems/linked-list-cycle/
+func HasCycle(head *ListNode) bool {
+	// create 2 pointers, slow pointer and fast pointer.
+	slowp := head
+	fastp := head
+
+	for slowp != nil && fastp != nil && fastp.Next != nil {
+		slowp = slowp.Next
+		fastp = fastp.Next.Next
+		if slowp == fastp {
+			return true
+		}
+	}
+
+	return false
+
+}
+
+//https://leetcode.com/problems/merge-two-sorted-lists/
+func MergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
+	var newhead *ListNode
+	var currhead *ListNode
+	var node *ListNode
+	bfirst := true
+	for l1 != nil && l2 != nil {
+		var node *ListNode
+		if l1.Val < l2.Val {
+			node = &ListNode{Val: l1.Val, Next: nil}
+			l1 = l1.Next
+		} else {
+			node = &ListNode{Val: l2.Val, Next: nil}
+			l2 = l2.Next
+
+		}
+		if bfirst {
+			newhead = node
+			currhead = node
+			bfirst = false
+		} else {
+			currhead.Next = node
+			currhead = currhead.Next
+		}
+	}
+
+	for l1 != nil {
+		node = &ListNode{Val: l1.Val, Next: nil}
+		if bfirst {
+			newhead = node
+			currhead = node
+			bfirst = false
+		} else {
+			currhead.Next = node
+			currhead = currhead.Next
+		}
+		l1 = l1.Next
+	}
+
+	for l2 != nil {
+		node = &ListNode{Val: l2.Val, Next: nil}
+		if bfirst {
+			newhead = node
+			currhead = node
+			bfirst = false
+		} else {
+			currhead.Next = node
+			currhead = currhead.Next
+		}
+		l2 = l2.Next
+	}
+	return newhead
+}
+
+func RemoveElements(head *ListNode, val int) *ListNode {
+
+	// remove values in front.
+	for head != nil {
+		if head.Val == val {
+			head = head.Next
+		} else {
+			break
+		}
+	}
+
+	if head == nil {
+		return head
+	}
+	loop := head.Next
+	prev := head
+	for loop != nil {
+		if loop.Val != val {
+			loop = loop.Next
+			prev = prev.Next
+		} else {
+			prev.Next = loop.Next
+			loop = loop.Next
+		}
+
+	}
+
+	return head
+}
+
+//https://leetcode.com/problems/remove-duplicates-from-sorted-list/
+func DeleteDuplicates(head *ListNode) *ListNode {
+	dupl := make(map[int]int)
+	orighead := head
+	prev := &ListNode{}
+
+	for head != nil {
+		if _, ok := dupl[head.Val]; ok {
+			// time to delete the node
+			prev.Next = head.Next
+			head = head.Next
+		} else {
+			dupl[head.Val] = 1
+			prev = head
+			head = head.Next
+		}
+	}
+	return orighead
+}
+
+//https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
+// different from above - delete all instances of duplicates
+func DeleteAllDuplicates(head *ListNode) *ListNode {
+	// need to work on this.
+	return head
+}

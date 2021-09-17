@@ -464,6 +464,7 @@ func DeleteDuplicates(head *ListNode) *ListNode {
 //https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
 // different from above - delete all instances of duplicates
 func DeleteAllDuplicates(head *ListNode) *ListNode {
-	// need to work on this.
-	return head
+	// node values can be betweeen -100 to 100
+	// should work on this.
+	return nil
 }

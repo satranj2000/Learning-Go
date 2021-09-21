@@ -1,6 +1,9 @@
 package datastructs
 
-import "math"
+import (
+	"math"
+	"sort"
+)
 
 type TreeNode struct {
 	Val   int
@@ -107,4 +110,155 @@ func invertTree(root *TreeNode) *TreeNode {
 	root.Right = lnode
 
 	return root
+}
+
+//https://leetcode.com/problems/path-sum/
+func hasPathSum(root *TreeNode, targetSum int) bool {
+	if root == nil {
+		return false
+	}
+	if root.Left == nil && root.Right == nil && root.Val == targetSum {
+		return true
+	}
+
+	return hasPathSum(root.Left, targetSum-root.Val) || hasPathSum(root.Right, targetSum-root.Val)
+
+}
+
+//https://leetcode.com/problems/balanced-binary-tree/
+func isBalanced(root *TreeNode) bool {
+	if root == nil {
+		return true
+	}
+
+	lsize := maxDepth(root.Left)
+	rsize := maxDepth(root.Right)
+
+	// check the depth is not more than 1 and call the isBalanced again for left and right
+	return math.Abs(float64(lsize)-float64(rsize)) <= 1 && isBalanced(root.Left) && isBalanced(root.Right)
+}
+
+// not yet fully working.. need to continue working on this.
+func minDepth(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+
+	lsize := maxDepth(root.Left)
+	rsize := maxDepth(root.Right)
+
+	return int(math.Min(float64(lsize), float64(rsize)))
+
+}
+
+func searchBST(root *TreeNode, val int) *TreeNode {
+
+	for root != nil {
+		if val == root.Val {
+			return root
+		}
+		if val > root.Val {
+			root = root.Right
+		} else {
+			root = root.Left
+		}
+	}
+
+	return nil
+}
+
+func insertIntoBST(root *TreeNode, val int) *TreeNode {
+	if root == nil {
+		newroot := &TreeNode{Val: val, Left: nil, Right: nil}
+		return newroot
+	}
+
+	if val > root.Val {
+		if root.Right != nil {
+			insertIntoBST(root.Right, val)
+		} else {
+			root.Right = &TreeNode{Val: val, Left: nil, Right: nil}
+		}
+
+	} else {
+		if root.Left != nil {
+			insertIntoBST(root.Left, val)
+		} else {
+			root.Left = &TreeNode{Val: val, Left: nil, Right: nil}
+		}
+	}
+	return root
+}
+
+func isValidBST(root *TreeNode) bool {
+	return isValidBinaryTree(root, math.MaxInt64, math.MaxInt64)
+}
+
+func isValidBinaryTree(root *TreeNode, min int, max int) bool {
+	if root == nil {
+		return true
+	}
+
+	if root.Val <= min || root.Val >= max {
+		return false
+	}
+
+	return isValidBinaryTree(root.Left, min, root.Val) && isValidBinaryTree(root.Right, root.Val, max)
+}
+
+// find two numbers in BST that are equivalent to the sum
+func findTarget(root *TreeNode, k int) bool {
+
+	numlist := inorderTraversal(root)
+
+	for i := 0; i < len(numlist); i++ {
+		for j := i; j < len(numlist); j++ {
+			if numlist[i]+numlist[j] == k {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func findMode(root *TreeNode) []int {
+
+	modes := make(map[int]int)
+	findNodeBST(root, modes)
+	// fill the map with node value and their count (key - node value; value - count)
+
+	// sort them.
+	valueslist := make([]int, len(modes))
+	i := 0
+	for _, v := range modes {
+		valueslist[i] = v
+		i++
+	}
+	sort.Ints(valueslist)
+
+	// take the top
+	topnodes := make([]int, 0, len(modes))
+
+	for k, v := range modes {
+		if v == valueslist[len(valueslist)-1] {
+			topnodes = append(topnodes, k)
+		}
+	}
+	return topnodes
+}
+
+func findNodeBST(root *TreeNode, modes map[int]int) {
+	if root == nil {
+		return
+	}
+	if root != nil {
+		if _, ok := modes[root.Val]; ok {
+			modes[root.Val] += 1
+		} else {
+			modes[root.Val] = 1
+		}
+	}
+
+	findNodeBST(root.Left, modes)
+	findNodeBST(root.Right, modes)
 }

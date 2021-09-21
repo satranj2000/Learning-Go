@@ -525,3 +525,39 @@ func TestCanConstruct(t *testing.T) {
 	}
 
 }
+
+func TestBinarySearch(t *testing.T) {
+	nums := []int{-1, 0, 3, 5, 9, 12}
+
+	res := leet.Binarysearch(nums, 9)
+	if res != 4 {
+		t.Errorf("Expected the position to be 4. But got %v", res)
+	}
+}
+
+func TestBinarySearch2(t *testing.T) {
+	nums := []int{-1, 0, 3, 5, 9, 12}
+
+	res := leet.Binarysearch(nums, 2)
+	if res != -1 {
+		t.Errorf("Expected the position to be -1. But got %v", res)
+	}
+}
+
+func TestBinarySearch3(t *testing.T) {
+	nums := []int{2, 5}
+
+	res := leet.Binarysearch(nums, 2)
+	if res != 0 {
+		t.Errorf("Expected the position to be 0. But got %v", res)
+	}
+}
+
+func TestBinarySearch4(t *testing.T) {
+	nums := []int{2, 5}
+
+	res := leet.Binarysearch(nums, 5)
+	if res != 1 {
+		t.Errorf("Expected the position to be 5. But got %v", res)
+	}
+}

@@ -561,3 +561,55 @@ func TestBinarySearch4(t *testing.T) {
 		t.Errorf("Expected the position to be 5. But got %v", res)
 	}
 }
+
+func TestSortedSquares(t *testing.T) {
+	inputs := [][]int{
+		{-4, -1, 0, 3, 10},
+		{-7, -3, 2, 3, 11},
+		{10},
+		{-10},
+		{-3, -2, -1},
+		{1, 2, 3},
+	}
+	outputs := [][]int{
+		{0, 1, 9, 16, 100},
+		{4, 9, 9, 49, 121},
+		{100},
+		{100},
+		{1, 4, 9},
+		{1, 4, 9},
+	}
+
+	for i, input := range inputs {
+		res := leet.SortedSquares(input)
+		if !CompareArrayValues(res, outputs[i]) {
+			t.Errorf("Expected %v, got %v", outputs[i], input)
+		}
+	}
+}
+
+func TestRotateSlice(t *testing.T) {
+	inputs := [][]int{
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+	}
+	kPos := []int{1, 2, 3, 4, 5}
+
+	outputs := [][]int{
+		{3, 1, 2},
+		{2, 3, 1},
+		{1, 2, 3},
+		{3, 1, 2},
+		{2, 3, 1},
+	}
+
+	for i, input := range inputs {
+		leet.Rotate(input, kPos[i])
+		if !CompareArrayValues(input, outputs[i]) {
+			t.Errorf("Expected %v, got %v for position %v", outputs[i], input, kPos[i])
+		}
+	}
+}

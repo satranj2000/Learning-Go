@@ -2,6 +2,7 @@ package leet
 
 import (
 	"math"
+	"math/rand"
 	"sort"
 	"strconv"
 	"strings"
@@ -1224,4 +1225,137 @@ func Binarysearch(nums []int, target int) int {
 		}
 	}
 	return -1
+}
+
+// external function to be call. for now, it is just a function that randomly returns true or false
+func isBadVersion(version int) bool {
+	val := rand.Int()
+	if val%2 == 0 {
+		return true
+	} else {
+		return false
+	}
+}
+
+//https://leetcode.com/problems/first-bad-version/ - used the description section of leetcode to understand and code.
+func firstBadVersion(n int) int {
+	start := 0
+	end := n
+	var mid int
+
+	for start < end {
+		mid = start + ((end - start) / 2)
+		if isBadVersion(mid) {
+			end = mid
+		} else {
+			start = mid + 1
+		}
+	}
+	return start
+}
+
+//https://leetcode.com/problems/search-insert-position/
+func searchInsert(nums []int, target int) int {
+	l := 0
+	r := len(nums) - 1
+	var mid int
+
+	for l <= r {
+		mid = l + ((r - l) / 2)
+		if nums[mid] == target {
+			return mid
+		}
+		if target < nums[mid] {
+			r = mid - 1
+		} else {
+			l = mid + 1
+		}
+	}
+	return l
+}
+
+func SortedSquares(nums []int) []int {
+	var l int
+
+	bFoundPos := false
+	// find the position of the index where the array becomes zero or greater than zero.
+	for i := 0; i < len(nums); i++ {
+		if nums[i] >= 0 {
+			l = i
+			bFoundPos = true
+			break
+		}
+	}
+
+	if !bFoundPos {
+		l = len(nums)
+	}
+
+	j := l - 1
+	i := l
+	sortedNums := make([]int, len(nums))
+	k := 0
+	for i < len(nums) && j >= 0 {
+		posSqrs := nums[i] * nums[i]
+		negSqrs := nums[j] * nums[j]
+		if posSqrs < negSqrs {
+			sortedNums[k] = posSqrs
+			i++
+			k++
+		} else {
+			if posSqrs > negSqrs {
+				sortedNums[k] = negSqrs
+				j--
+				k++
+			} else {
+				sortedNums[k] = posSqrs
+				k++
+				sortedNums[k] = negSqrs
+				k++
+				i++
+				j--
+			}
+		}
+
+	}
+	for i < len(nums) {
+		posSqrs := nums[i] * nums[i]
+		sortedNums[k] = posSqrs
+		k++
+		i++
+	}
+	for j >= 0 {
+		negSqrs := nums[j] * nums[j]
+		sortedNums[k] = negSqrs
+		k++
+		j--
+	}
+	return sortedNums
+}
+
+//rotate a slice
+func Rotate(nums []int, k int) {
+	l := len(nums)
+	var rotPos int
+	if k < l {
+		rotPos = l - k
+	} else {
+		rotPos = l - (k % l)
+	}
+
+	rotatedNums := make([]int, len(nums))
+	j := 0
+	// take the last part first
+	for i := rotPos; i < l; i++ {
+		rotatedNums[j] = nums[i]
+		j++
+	}
+	for i := 0; i < rotPos; i++ {
+		rotatedNums[j] = nums[i]
+		j++
+	}
+
+	for i := 0; i < len(rotatedNums); i++ {
+		nums[i] = rotatedNums[i]
+	}
 }

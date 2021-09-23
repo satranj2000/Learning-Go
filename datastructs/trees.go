@@ -262,3 +262,28 @@ func findNodeBST(root *TreeNode, modes map[int]int) {
 	findNodeBST(root.Left, modes)
 	findNodeBST(root.Right, modes)
 }
+
+func treeHeight(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+	var leftHeight, rightHeight int
+
+	if root.Left == nil && root.Right == nil {
+		return 1
+	}
+
+	if root.Left != nil {
+		leftHeight = treeHeight(root.Left) + 1
+	}
+
+	if root.Right != nil {
+		rightHeight = treeHeight(root.Right) + 1
+	}
+
+	if leftHeight > rightHeight {
+		return leftHeight
+	} else {
+		return rightHeight
+	}
+}

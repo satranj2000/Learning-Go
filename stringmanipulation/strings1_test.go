@@ -252,3 +252,16 @@ func TestGetDecimalValue5(t *testing.T) {
 		t.Errorf("Error. Got wrong output. Expected 0, got %v", res)
 	}
 }
+
+func TestReverseWords(t *testing.T) {
+	inputstrs := []string{"God Ding", "let us write code"}
+	outputsstr := []string{"doG gniD", "tel su etirw edoc"}
+
+	for i, s := range inputstrs {
+		res := stringmanipulation.ReverseWords(s)
+		if res != outputsstr[i] {
+			t.Errorf("String is not reversed as required. Expected %v, got %v", outputsstr[i], res)
+		}
+	}
+
+}

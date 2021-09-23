@@ -1359,3 +1359,85 @@ func Rotate(nums []int, k int) {
 		nums[i] = rotatedNums[i]
 	}
 }
+
+func MoveZeroes(nums []int) {
+
+	var zercnt int
+
+	for i := 0; i < len(nums); i++ {
+		if nums[i] == 0 {
+			zercnt++
+		}
+	}
+
+	k := 0
+	for i := 0; i < len(nums); i++ {
+		if nums[i] != 0 {
+			nums[k] = nums[i]
+			k++
+		}
+	}
+
+	for k < len(nums) {
+		nums[k] = 0
+		k++
+	}
+
+}
+
+//https://leetcode.com/problems/remove-element/
+// this same as earlier problem of moving zeros. Except we replace zero with a value.
+func removeElement(nums []int, val int) int {
+
+	var valcnt int
+
+	for i := 0; i < len(nums); i++ {
+		if nums[i] == val {
+			valcnt++
+		}
+	}
+
+	k := 0
+	for i := 0; i < len(nums); i++ {
+		if nums[i] != val {
+			nums[k] = nums[i]
+			k++
+		}
+	}
+
+	return k
+}
+
+//https://leetcode.com/problems/maximum-product-of-three-numbers/
+func maximumProduct(nums []int) int {
+
+	sort.Ints(nums)
+	l := len(nums)
+	out1 := math.MinInt64
+
+	if nums[0] < 0 && nums[1] < 0 {
+		out1 = nums[0] * nums[1] * nums[l-1]
+	}
+	out2 := nums[l-1] * nums[l-2] * nums[l-3]
+
+	return int(math.Max(float64(out1), float64(out2)))
+
+}
+
+//https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/
+func TwoSumIncreasing(numbers []int, target int) []int {
+
+	for i := 0; i < len(numbers); i++ {
+		for j := i + 1; j < len(numbers); j++ {
+			sum := numbers[i] + numbers[j]
+			if sum > target {
+				break
+			}
+			if sum == target {
+				return []int{i + 1, j + 1}
+			}
+		}
+	}
+	// as per the definition, there will always be a solution.
+	return []int{-1, -1}
+}

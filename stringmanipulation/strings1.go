@@ -392,6 +392,28 @@ func ReverseString(s []byte) {
 	}
 }
 
+func ReverseStr(s []byte) string {
+	j := len(s) - 1
+	half := len(s) / 2
+	for i := 0; i < half; i++ {
+		temp := s[i]
+		s[i] = s[j]
+		s[j] = temp
+		j--
+	}
+	return string(s)
+}
+
+func ReverseWords(s string) string {
+	words := strings.Split(s, " ")
+	var reverseStr string
+	for _, w := range words {
+		revWord := ReverseStr([]byte(w))
+		reverseStr = reverseStr + " " + revWord
+	}
+	return strings.TrimLeft(reverseStr, " ")
+}
+
 //https://leetcode.com/problems/reverse-vowels-of-a-string/
 func ReverseVowels(s string) string {
 	// assumption is that all string values are in ascii. Therefore converted to byte and not rune

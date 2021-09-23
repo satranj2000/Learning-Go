@@ -610,3 +610,43 @@ func TestFindMode3(t *testing.T) {
 		}
 	}
 }
+
+func TestTreeHeight(t *testing.T) {
+	root := &TreeNode{2, nil, nil}
+	root.Left = &TreeNode{2, nil, nil}
+	root.Left.Left = &TreeNode{1, nil, nil}
+	root.Left.Left.Left = &TreeNode{1, nil, nil}
+
+	h := treeHeight(root)
+	if h != 4 {
+		t.Errorf("Expected height to be 4, but got %v", h)
+	}
+
+}
+
+func TestTreeHeight2(t *testing.T) {
+	root := &TreeNode{2, nil, nil}
+	root.Left = &TreeNode{2, nil, nil}
+	root.Left.Left = &TreeNode{1, nil, nil}
+	root.Left.Right = &TreeNode{1, nil, nil}
+
+	h := treeHeight(root)
+	if h != 3 {
+		t.Errorf("Expected height to be 3, but got %v", h)
+	}
+
+}
+
+func TestTreeHeight3(t *testing.T) {
+	root := &TreeNode{2, nil, nil}
+	root.Left = &TreeNode{2, nil, nil}
+	root.Left.Left = &TreeNode{1, nil, nil}
+	root.Left.Left.Left = &TreeNode{1, nil, nil}
+	root.Left.Left.Left.Right = &TreeNode{5, nil, nil}
+
+	h := treeHeight(root)
+	if h != 5 {
+		t.Errorf("Expected height to be 5, but got %v", h)
+	}
+
+}

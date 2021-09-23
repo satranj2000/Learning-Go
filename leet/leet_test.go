@@ -613,3 +613,49 @@ func TestRotateSlice(t *testing.T) {
 		}
 	}
 }
+
+func TestMoveZeros(t *testing.T) {
+	inputs := [][]int{
+		{0, 1, 0, 5, 0, 6},
+		{0, 0, 0, 5, 6, 0},
+		{0, 0, 5, 6, 7, 8},
+	}
+	outputs := [][]int{
+		{1, 5, 6, 0, 0, 0},
+		{5, 6, 0, 0, 0, 0},
+		{5, 6, 7, 8, 0, 0},
+	}
+
+	for i, input := range inputs {
+		leet.MoveZeroes(input)
+		if !CompareArrayValues(input, outputs[i]) {
+			t.Errorf("Expected %v, got %v ", outputs[i], input)
+		}
+	}
+}
+
+func TestTwoSumIncreasing(t *testing.T) {
+	inputs := [][]int{
+		{2, 3, 4},
+		{-1, 0},
+		{-1, 0, 1},
+	}
+	targets := []int{
+		6,
+		-1,
+		0,
+	}
+	outputs := [][]int{
+		{1, 3},
+		{1, 2},
+		{1, 3},
+	}
+
+	for i, input := range inputs {
+		res := leet.TwoSumIncreasing(input, targets[i])
+		if !CompareArrayValues(res, outputs[i]) {
+			t.Errorf("Expected %v, got %v for the target %v", outputs[i], res, targets[i])
+		}
+	}
+
+}

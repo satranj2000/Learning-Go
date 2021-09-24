@@ -21,3 +21,10 @@ func (s *Stack) Pop() (val int, err error) {
 	s.items = s.items[:len(s.items)-1]
 	return val, err
 }
+
+func (s *Stack) IsEmpty() bool {
+	if len(s.items) > 0 {
+		return false
+	}
+	return true
+}

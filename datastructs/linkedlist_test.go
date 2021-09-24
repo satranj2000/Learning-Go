@@ -720,3 +720,156 @@ func TestDeleteDuplicates5(t *testing.T) {
 	}
 
 }
+
+func TestMiddleNode(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+	node3 := ListNode{Val: 3, Next: nil}
+	node4 := ListNode{Val: 4, Next: nil}
+	node5 := ListNode{Val: 5, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+
+	res := MiddleNode(&head)
+
+	if res.Val != 3 {
+		t.Errorf("Expected output as 3. but got %v", res.Val)
+	}
+
+}
+
+func TestMiddleNode2(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+	node3 := ListNode{Val: 3, Next: nil}
+	node4 := ListNode{Val: 4, Next: nil}
+	node5 := ListNode{Val: 5, Next: nil}
+	node6 := ListNode{Val: 6, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+	node5.Next = &node6
+
+	res := MiddleNode(&head)
+
+	if res.Val != 4 {
+		t.Errorf("Expected output as 4. but got %v", res.Val)
+	}
+
+}
+
+func TestMiddleNode3(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	res := MiddleNode(&head)
+
+	if res.Val != 1 {
+		t.Errorf("Expected output as 1. but got %v", res.Val)
+	}
+
+}
+
+func TestMiddleNode4(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node1 := ListNode{Val: 2, Next: nil}
+	head.Next = &node1
+	res := MiddleNode(&head)
+
+	if res.Val != 1 {
+		t.Errorf("Expected output as 1. but got %v", res.Val)
+	}
+
+}
+
+func TestRemoveNthFromEnd(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	res := RemoveNthFromEnd(&head, 1)
+
+	if res != nil {
+		t.Errorf("Expected nil head but got something else - %v", res.Val)
+	}
+}
+
+func TestRemoveNthFromEnd1(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+	node3 := ListNode{Val: 3, Next: nil}
+	node4 := ListNode{Val: 4, Next: nil}
+	node5 := ListNode{Val: 5, Next: nil}
+	node6 := ListNode{Val: 6, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+	node5.Next = &node6
+
+	res := RemoveNthFromEnd(&head, 2)
+	output := []int{1, 2, 3, 4, 6}
+	outputRes := res.AsArray()
+
+	if !CompareArrays(output, outputRes) {
+		t.Errorf("Expected %v, got %v", output, outputRes)
+	}
+
+}
+
+func TestRemoveNthFromEnd2(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+	node3 := ListNode{Val: 3, Next: nil}
+	node4 := ListNode{Val: 4, Next: nil}
+	node5 := ListNode{Val: 5, Next: nil}
+	node6 := ListNode{Val: 6, Next: nil}
+
+	head.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+	node5.Next = &node6
+
+	res := RemoveNthFromEnd(&head, 6)
+	output := []int{2, 3, 4, 5, 6}
+	outputRes := res.AsArray()
+
+	if !CompareArrays(output, outputRes) {
+		t.Errorf("Expected %v, got %v", output, outputRes)
+	}
+
+}
+
+func TestRemoveNthFromEnd4(t *testing.T) {
+	head := ListNode{Val: 1, Next: nil}
+	node1 := ListNode{Val: 2, Next: nil}
+	head.Next = &node1
+
+	res := RemoveNthFromEnd(&head, 1)
+	output := []int{1}
+	outputRes := res.AsArray()
+
+	if !CompareArrays(output, outputRes) {
+		t.Errorf("Expected %v, got %v", output, outputRes)
+	}
+
+}
+
+func CompareArrays(a1 []int, a2 []int) bool {
+
+	l1 := len(a1)
+	l2 := len(a2)
+	if l1 != l2 {
+		return false
+	}
+
+	for i := 0; i < l1; i++ {
+		if a1[i] != a2[i] {
+			return false
+		}
+	}
+
+	return true
+}

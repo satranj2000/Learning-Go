@@ -468,3 +468,49 @@ func DeleteAllDuplicates(head *ListNode) *ListNode {
 	// should work on this.
 	return nil
 }
+
+func MiddleNode(head *ListNode) *ListNode {
+
+	cnt := 0
+	curr := head
+
+	for curr != nil {
+		cnt++
+		curr = curr.Next
+	}
+
+	curr = head
+
+	for i := 0; i < cnt/2; i++ {
+		curr = curr.Next
+	}
+	return curr
+}
+
+func RemoveNthFromEnd(head *ListNode, n int) *ListNode {
+
+	cnt := 0
+	curr := head
+
+	for curr != nil {
+		cnt++
+		curr = curr.Next
+	}
+
+	curr = head
+	pos := cnt - n
+
+	for i := 0; i < pos-1; i++ {
+		curr = curr.Next
+	}
+	if curr == head {
+		if pos <= 0 {
+			head = head.Next
+		} else {
+			head.Next = head.Next.Next
+		}
+	} else {
+		curr.Next = curr.Next.Next
+	}
+	return head
+}

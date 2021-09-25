@@ -48,3 +48,24 @@ func (g *Graph) DepthFirst(start int) []int {
 
 	return depthList
 }
+
+func (g *Graph) BreadthFirst(start int) []int {
+	q := Queue{}
+	q.Enqueue(start)
+
+	depthList := make([]int, 0)
+
+	for !q.IsEmpty() {
+		val, _ := q.Dequeue()
+		depthList = append(depthList, val)
+		if v, ok := g.nodes[val]; ok {
+			for i := 0; i < len(v.edges); i++ {
+				q.Enqueue(v.edges[i])
+			}
+		} else {
+			// no vertex with this edge found.
+			break
+		}
+	}
+	return depthList
+}

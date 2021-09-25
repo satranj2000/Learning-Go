@@ -21,3 +21,10 @@ func (q *Queue) Dequeue() (val int, err error) {
 	q.items = q.items[1:len(q.items)]
 	return val, err
 }
+
+func (q *Queue) IsEmpty() bool {
+	if len(q.items) > 0 {
+		return false
+	}
+	return true
+}

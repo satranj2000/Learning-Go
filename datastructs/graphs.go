@@ -69,3 +69,24 @@ func (g *Graph) BreadthFirst(start int) []int {
 	}
 	return depthList
 }
+
+func (g *Graph) HasPath(start int, end int) bool {
+	s := Stack{}
+	s.Push(start)
+
+	for !s.IsEmpty() {
+		val, _ := s.Pop()
+		if val == end {
+			return true
+		}
+		if v, ok := g.nodes[val]; ok {
+			for i := 0; i < len(v.edges); i++ {
+				s.Push(v.edges[i])
+			}
+		} else {
+			// no vertex with this edge found.
+			break
+		}
+	}
+	return false
+}

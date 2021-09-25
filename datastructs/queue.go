@@ -23,8 +23,5 @@ func (q *Queue) Dequeue() (val int, err error) {
 }
 
 func (q *Queue) IsEmpty() bool {
-	if len(q.items) > 0 {
-		return false
-	}
-	return true
+	return len(q.items) <= 0
 }

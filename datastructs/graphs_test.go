@@ -67,3 +67,33 @@ func TestBreadthFirst(t *testing.T) {
 	}
 
 }
+
+func TestHasPath(t *testing.T) {
+	n1 := &GraphNode{Val: 1, edges: []int{2, 3}}
+	n2 := &GraphNode{Val: 2, edges: []int{4}}
+	n3 := &GraphNode{Val: 3, edges: []int{5}}
+	n4 := &GraphNode{Val: 4, edges: []int{3}}
+	n5 := &GraphNode{Val: 5, edges: []int{}}
+	n6 := &GraphNode{Val: 6, edges: []int{5}}
+
+	g := Graph{}
+
+	g.AddNode(n1)
+	g.AddNode(n2)
+	g.AddNode(n3)
+	g.AddNode(n4)
+	g.AddNode(n5)
+	g.AddNode(n6)
+
+	if !g.HasPath(1, 5) {
+		t.Errorf("Expected a path but did not receive one")
+	}
+
+	if g.HasPath(6, 4) {
+		t.Errorf("Did not expect a path but got one")
+	}
+
+	if !g.HasPath(2, 2) {
+		t.Errorf("Expected a path but did not receive one")
+	}
+}

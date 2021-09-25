@@ -779,7 +779,7 @@ func TestMiddleNode4(t *testing.T) {
 	head.Next = &node1
 	res := MiddleNode(&head)
 
-	if res.Val != 1 {
+	if res.Val != 2 {
 		t.Errorf("Expected output as 1. but got %v", res.Val)
 	}
 

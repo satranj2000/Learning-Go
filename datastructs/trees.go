@@ -191,7 +191,7 @@ func insertIntoBST(root *TreeNode, val int) *TreeNode {
 }
 
 func isValidBST(root *TreeNode) bool {
-	return isValidBinaryTree(root, math.MaxInt64, math.MaxInt64)
+	return isValidBinaryTree(root, math.MinInt64, math.MaxInt64)
 }
 
 func isValidBinaryTree(root *TreeNode, min int, max int) bool {

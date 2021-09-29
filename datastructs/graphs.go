@@ -164,3 +164,36 @@ func (g *Graph) traverse(pos int, visited map[int]bool) {
 		g.traverse(v, visited)
 	}
 }
+
+func (g *Graph) FindMaxGroupNodeCount() int {
+	max := 0
+	visited := make(map[int]bool)
+
+	// loop through each node in the graph and check its adjacency list and mark them.
+	for k, _ := range g.nodes {
+		if visited[k] {
+			continue
+		}
+		// if k is not visited already, traverse through its adjacency list and mark them as visited.
+		if !visited[k] {
+			cnt := g.traverseCount(k, visited)
+			if cnt > max {
+				max = cnt
+			}
+		}
+
+	}
+	return max
+}
+
+func (g *Graph) traverseCount(pos int, visited map[int]bool) int {
+	if visited[pos] {
+		return 0
+	}
+	visited[pos] = true
+	cnt := 1
+	for _, v := range g.nodes[pos].edges {
+		cnt += g.traverseCount(v, visited)
+	}
+	return cnt
+}

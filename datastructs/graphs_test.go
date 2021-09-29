@@ -247,3 +247,82 @@ func TestFindGraphGroupCount3(t *testing.T) {
 	}
 
 }
+
+func TestFindMaxGraphGroupCount(t *testing.T) {
+	n1 := &GraphNode{Val: 1, edges: []int{2, 3}}
+	n2 := &GraphNode{Val: 2, edges: []int{1, 4}}
+	n3 := &GraphNode{Val: 3, edges: []int{1, 4, 5}}
+	n4 := &GraphNode{Val: 4, edges: []int{2, 3}}
+	n5 := &GraphNode{Val: 5, edges: []int{3, 6}}
+	n6 := &GraphNode{Val: 6, edges: []int{5}}
+	g := Graph{}
+
+	g.AddNode(n1)
+	g.AddNode(n2)
+	g.AddNode(n3)
+	g.AddNode(n4)
+	g.AddNode(n5)
+	g.AddNode(n6)
+
+	res := g.FindMaxGroupNodeCount()
+	if res != 6 {
+		t.Errorf("Expected the max graph count to be 6, but got  %v", res)
+	}
+
+}
+
+func TestFindMaxGraphGroupCount2(t *testing.T) {
+	n1 := &GraphNode{Val: 1, edges: []int{2, 3}}
+	n2 := &GraphNode{Val: 2, edges: []int{1, 4}}
+	n3 := &GraphNode{Val: 3, edges: []int{1, 4, 5}}
+	n4 := &GraphNode{Val: 4, edges: []int{2, 3}}
+	n5 := &GraphNode{Val: 5, edges: []int{3, 6}}
+	n6 := &GraphNode{Val: 6, edges: []int{5}}
+	n7 := &GraphNode{Val: 7, edges: []int{8}}
+	n8 := &GraphNode{Val: 8, edges: []int{7}}
+	n9 := &GraphNode{Val: 9, edges: []int{}}
+
+	g := Graph{}
+
+	g.AddNode(n1)
+	g.AddNode(n2)
+	g.AddNode(n3)
+	g.AddNode(n4)
+	g.AddNode(n5)
+	g.AddNode(n6)
+	g.AddNode(n7)
+	g.AddNode(n8)
+	g.AddNode(n9)
+
+	res := g.FindMaxGroupNodeCount()
+	if res != 6 {
+		t.Errorf("Expected the max graph count to be 6, but got  %v", res)
+	}
+
+}
+
+func TestFindMaxGraphGroupCount3(t *testing.T) {
+	n1 := &GraphNode{Val: 1, edges: []int{2, 3}}
+	n2 := &GraphNode{Val: 2, edges: []int{1, 4}}
+	n3 := &GraphNode{Val: 3, edges: []int{1, 4}}
+	n4 := &GraphNode{Val: 4, edges: []int{2, 3}}
+	n7 := &GraphNode{Val: 7, edges: []int{8, 9}}
+	n8 := &GraphNode{Val: 8, edges: []int{7}}
+	n9 := &GraphNode{Val: 9, edges: []int{9}}
+
+	g := Graph{}
+
+	g.AddNode(n1)
+	g.AddNode(n2)
+	g.AddNode(n3)
+	g.AddNode(n4)
+	g.AddNode(n7)
+	g.AddNode(n8)
+	g.AddNode(n9)
+
+	res := g.FindMaxGroupNodeCount()
+	if res != 4 {
+		t.Errorf("Expected the max graph count to be 4, but got  %v", res)
+	}
+
+}

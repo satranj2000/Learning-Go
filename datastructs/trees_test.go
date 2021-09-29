@@ -650,3 +650,48 @@ func TestTreeHeight3(t *testing.T) {
 	}
 
 }
+
+func TestMergeTrees(t *testing.T) {
+	root := &TreeNode{2, nil, nil}
+	root.Left = &TreeNode{2, nil, nil}
+	root.Left.Left = &TreeNode{1, nil, nil}
+	root.Left.Left.Left = &TreeNode{1, nil, nil}
+	root.Left.Left.Left.Right = &TreeNode{5, nil, nil}
+
+	root2 := &TreeNode{2, nil, nil}
+	root2.Left = &TreeNode{2, nil, nil}
+	root2.Left.Left = &TreeNode{1, nil, nil}
+	root2.Left.Left.Left = &TreeNode{1, nil, nil}
+
+	output := []int{4, 4, 2, 2, 5}
+	mergedTree := mergeTrees(root, root2)
+
+	reslist := preorderTraversal(mergedTree)
+
+	if !CompareArrays(output, reslist) {
+		t.Errorf("Expected %v, got %v", output, reslist)
+	}
+}
+
+func TestMergeTrees2(t *testing.T) {
+
+	root := &TreeNode{1, nil, nil}
+	root.Left = &TreeNode{3, nil, nil}
+	root.Right = &TreeNode{2, nil, nil}
+	root.Left.Left = &TreeNode{5, nil, nil}
+
+	root2 := &TreeNode{2, nil, nil}
+	root2.Left = &TreeNode{1, nil, nil}
+	root2.Right = &TreeNode{3, nil, nil}
+	root2.Left.Right = &TreeNode{4, nil, nil}
+	root2.Right.Right = &TreeNode{7, nil, nil}
+
+	output := []int{5, 4, 4, 3, 5, 7}
+	mergedTree := mergeTrees(root, root2)
+
+	reslist := inorderTraversal(mergedTree)
+
+	if !CompareArrays(output, reslist) {
+		t.Errorf("Expected %v, got %v", output, reslist)
+	}
+}

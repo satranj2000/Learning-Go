@@ -27,6 +27,7 @@ func (gnode *GraphNode) AddEdges(e int) bool {
 	return true
 }
 
+// directed graphs in this case and no cycles considered.
 func (g *Graph) DepthFirst(start int) []int {
 	s := Stack{}
 	s.Push(start)
@@ -49,6 +50,7 @@ func (g *Graph) DepthFirst(start int) []int {
 	return depthList
 }
 
+// directed graphs in this case and no cycles considered.
 func (g *Graph) BreadthFirst(start int) []int {
 	q := Queue{}
 	q.Enqueue(start)
@@ -70,6 +72,7 @@ func (g *Graph) BreadthFirst(start int) []int {
 	return depthList
 }
 
+// directed graphs in this case and no cycles considered.
 func (g *Graph) HasPath(start int, end int) bool {
 	s := Stack{}
 	s.Push(start)
@@ -89,4 +92,75 @@ func (g *Graph) HasPath(start int, end int) bool {
 		}
 	}
 	return false
+}
+
+// directed graphs in this case and no cycles considered.
+func (g *Graph) HasPathRecursive(start int, end int) bool {
+	if start == end {
+		return true
+	}
+
+	for _, v := range g.nodes[start].edges {
+		if g.HasPathRecursive(v, end) {
+			return true
+		}
+	}
+
+	return false
+}
+
+// undirected graphs in this case and cycles considered.
+func (g *Graph) HasPathRecursiveUndirected(start int, end int) bool {
+	visited := make(map[int]bool)
+	return g.undirectedpath(start, end, visited)
+}
+
+func (g *Graph) undirectedpath(start int, end int, visited map[int]bool) bool {
+	if start == end {
+		return true
+	}
+	if visited[start] {
+		return false
+	}
+	visited[start] = true
+
+	for _, v := range g.nodes[start].edges {
+		if g.undirectedpath(v, end, visited) {
+			return true
+		}
+	}
+	return false
+
+}
+
+// find the number of groups within a graph. A group is a set of connected nodes.
+func (g *Graph) FindGroupCount() int {
+	cnt := 0
+	visited := make(map[int]bool)
+
+	// loop through each node in the graph and check its adjacency list and mark them.
+	for k, _ := range g.nodes {
+		if visited[k] {
+			continue
+		}
+		// if k is not visited already, traverse through its adjacency list and mark them as visited.
+		if !visited[k] {
+			g.traverse(k, visited)
+			cnt++
+		}
+
+	}
+
+	return cnt
+}
+
+func (g *Graph) traverse(pos int, visited map[int]bool) {
+	if visited[pos] {
+		return
+	}
+	visited[pos] = true
+
+	for _, v := range g.nodes[pos].edges {
+		g.traverse(v, visited)
+	}
 }

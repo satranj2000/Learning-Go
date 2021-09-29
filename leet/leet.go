@@ -1,6 +1,7 @@
 package leet
 
 import (
+	"log"
 	"math"
 	"math/rand"
 	"sort"
@@ -1440,4 +1441,239 @@ func TwoSumIncreasing(numbers []int, target int) []int {
 	}
 	// as per the definition, there will always be a solution.
 	return []int{-1, -1}
+}
+
+func LengthOfLongestSubstring(s string) int {
+
+	substr := make(map[byte]int)
+	maxsz := 0
+	cnt := 0
+	var j int
+	for i := 0; i < len(s); {
+		cnt = 0
+		j = i
+		for j < len(s) {
+			if _, ok := substr[s[j]]; ok {
+				maxsz = int(math.Max(float64(maxsz), float64(cnt)))
+				i = substr[s[j]] + 1
+				for k := range substr {
+					delete(substr, k)
+				}
+				break
+			} else {
+				substr[s[j]] = j
+				cnt++
+			}
+			j++
+		}
+		if j == len(s) {
+			maxsz = int(math.Max(float64(maxsz), float64(cnt)))
+			break
+		}
+
+	}
+	return maxsz
+}
+
+//https://leetcode.com/problems/permutation-in-string/
+func CheckInclusion(s1 string, s2 string) bool {
+	if len(s1) > len(s2) {
+		return false
+	}
+	// array of characters and their count in s1.
+	s1cnt := make([]int, 26)
+	for _, c := range s1 {
+		s1cnt[c-97]++
+	}
+
+	for i := 0; i < len(s2)-len(s1)+1; i++ {
+		if s1cnt[s2[i]-97] > 0 {
+			// copy this array to temp array
+			tempalphas := make([]int, 26)
+			copy(tempalphas, s1cnt)
+			for j := i; j < i+len(s1); j++ {
+				if tempalphas[s2[j]-97] > 0 {
+					tempalphas[s2[j]-97]--
+				} else {
+					break
+				}
+			}
+			// if all values in temporary copy of the s1 array is empty; then we found a permutation.
+			isAllEmpty := true
+			for k := 0; k < 26; k++ {
+				if tempalphas[k] != 0 {
+					isAllEmpty = false
+					break
+				}
+			}
+			if isAllEmpty {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+//https://leetcode.com/problems/flood-fill/
+func FloodFill(image [][]int, sr int, sc int, newColor int) [][]int {
+	visited := make([][]int, len(image))
+	for i := 0; i < len(image); i++ {
+		visited[i] = make([]int, len(image[0]))
+	}
+	depthFirstfloodFill(image, sr, sc, newColor, image[sr][sc], visited)
+	return image
+}
+
+func depthFirstfloodFill(image [][]int, sr int, sc int, newColor int, replaceColor int, visited [][]int) {
+	if sr < 0 || sr >= len(image) || sc < 0 || sc >= len(image[0]) {
+		return
+	}
+
+	if visited[sr][sc] == 1 {
+		return
+	}
+	visited[sr][sc] = 1
+	if image[sr][sc] == replaceColor {
+		image[sr][sc] = newColor
+		depthFirstfloodFill(image, sr-1, sc, newColor, replaceColor, visited)
+		depthFirstfloodFill(image, sr, sc-1, newColor, replaceColor, visited)
+		depthFirstfloodFill(image, sr+1, sc, newColor, replaceColor, visited)
+		depthFirstfloodFill(image, sr, sc+1, newColor, replaceColor, visited)
+	}
+}
+
+//https://leetcode.com/problems/max-area-of-island/
+func MaxAreaOfIsland(grid [][]int) int {
+	visited := make([][]int, len(grid))
+	for i := 0; i < len(grid); i++ {
+		visited[i] = make([]int, len(grid[0]))
+	}
+	max := 0
+
+	for i := 0; i < len(grid); i++ {
+		for j := 0; j < len(grid[0]); j++ {
+			if visited[i][j] == 0 && grid[i][j] == 1 {
+				maxLands := depthFirstMaxAreaofIsland(grid, i, j, visited)
+				if maxLands > max {
+					max = maxLands
+				}
+			}
+		}
+	}
+	return max
+}
+
+func depthFirstMaxAreaofIsland(grid [][]int, sr int, sc int, visited [][]int) int {
+	st := Stack{}
+	st.Push(RowCol{r: sr, c: sc})
+	cnt := 0
+	for !st.IsEmpty() {
+		rc, _ := st.Pop()
+		if visited[rc.r][rc.c] == 1 {
+			continue
+		} else {
+			cnt++
+			visited[rc.r][rc.c] = 1
+
+			// check if row +1 is within range and is part of island (value = 1 )
+			if rc.r+1 < len(grid) && grid[rc.r+1][rc.c] == 1 {
+				st.Push(RowCol{r: rc.r + 1, c: rc.c})
+			}
+			if rc.r-1 >= 0 && grid[rc.r-1][rc.c] == 1 {
+				st.Push(RowCol{r: rc.r - 1, c: rc.c})
+			}
+			if rc.c+1 < len(grid[0]) && grid[rc.r][rc.c+1] == 1 {
+				st.Push(RowCol{r: rc.r, c: rc.c + 1})
+			}
+			if rc.c-1 >= 0 && grid[rc.r][rc.c-1] == 1 {
+				st.Push(RowCol{r: rc.r, c: rc.c - 1})
+			}
+		}
+
+	}
+	return cnt
+}
+
+type Stack struct {
+	items []RowCol
+}
+
+type RowCol struct {
+	r int
+	c int
+}
+
+func (s *Stack) Push(rc RowCol) {
+	s.items = append(s.items, rc)
+}
+
+func (s *Stack) Pop() (val RowCol, err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			log.Println("Pop failed with error -  ", r)
+			err = r.(error)
+		}
+	}()
+	val = s.items[len(s.items)-1]
+	s.items = s.items[:len(s.items)-1]
+	return val, err
+}
+
+func (s *Stack) IsEmpty() bool {
+	return len(s.items) <= 0
+}
+
+//https://leetcode.com/problems/island-perimeter/
+func IslandPerimeter(grid [][]int) int {
+	perimeter := 0
+	for i := 0; i < len(grid); i++ {
+		for j := 0; j < len(grid[0]); j++ {
+			if grid[i][j] == 1 {
+				// all columns sides when row = 0 above will be considered as a perimeter
+				if i == 0 {
+					perimeter++
+				}
+				// all rows when column = 0 will be considered for perimeter
+				if j == 0 {
+					perimeter++
+				}
+				//when i is last row
+				if i == len(grid)-1 {
+					perimeter++
+				}
+				// when j is last column
+				if j == len(grid[0])-1 {
+					perimeter++
+				}
+
+				if i+1 < len(grid) && grid[i+1][j] != 1 {
+					perimeter++
+				}
+
+				if i-1 >= 0 && grid[i-1][j] != 1 {
+					perimeter++
+				}
+
+				if j+1 < len(grid[0]) && grid[i][j+1] != 1 {
+					perimeter++
+				}
+
+				if j-1 >= 0 && grid[i][j-1] != 1 {
+					perimeter++
+				}
+			}
+		}
+	}
+	return perimeter
+}
+
+func updateMatrix(mat [][]int) [][]int {
+	nearMat := make([][]int, len(mat))
+	for i := 0; i < len(mat); i++ {
+		nearMat[i] = make([]int, len(mat[0]))
+	}
+
+	// not yet completed.
+	return nearMat
+
 }

@@ -659,3 +659,161 @@ func TestTwoSumIncreasing(t *testing.T) {
 	}
 
 }
+
+func TestLengthOfLongestSubstring(t *testing.T) {
+	inputs := []string{
+		"abcabcbb",
+		"bbbbb",
+		"pwwkew",
+		"abccfghi",
+		"abccfghih",
+		"abc",
+	}
+	outputs := []int{3, 1, 3, 5, 5, 3}
+
+	for i, input := range inputs {
+		res := leet.LengthOfLongestSubstring(input)
+		if res != outputs[i] {
+			t.Errorf("Expected %v, got %v", outputs[i], res)
+		}
+	}
+
+}
+
+func TestCheckForInclusion(t *testing.T) {
+	s1inputs := []string{
+		"ab",
+		"ab",
+		"adc",
+		"hello",
+	}
+	s2inputs := []string{
+		"eidbaooo",
+		"eidboaoo",
+		"dcda",
+		"ooolleoooleh",
+	}
+	outputs := []bool{
+		true, false, true, false,
+	}
+
+	for i := range s1inputs {
+		res := leet.CheckInclusion(s1inputs[i], s2inputs[i])
+		if res != outputs[i] {
+			t.Errorf("Expected %v, got %v", outputs[i], res)
+		}
+	}
+}
+
+func TestFloodFill(t *testing.T) {
+	image := [][]int{
+		{1, 1, 1},
+		{1, 1, 0},
+		{1, 0, 1},
+	}
+
+	output := [][]int{
+		{2, 2, 2},
+		{2, 2, 0},
+		{2, 0, 1},
+	}
+
+	leet.FloodFill(image, 1, 1, 2)
+
+	for i := 0; i < len(output); i++ {
+		for j := 0; j < len(output[0]); j++ {
+			if output[i][j] != image[i][j] {
+				t.Errorf("Expected %v, got %v", output, image)
+			}
+		}
+	}
+}
+
+func TestFloodFill2(t *testing.T) {
+	image := [][]int{
+		{0, 0, 0},
+		{0, 0, 0},
+	}
+
+	output := [][]int{
+		{2, 2, 2},
+		{2, 2, 2},
+	}
+
+	leet.FloodFill(image, 0, 0, 2)
+
+	for i := 0; i < len(output); i++ {
+		for j := 0; j < len(output[0]); j++ {
+			if output[i][j] != image[i][j] {
+				t.Errorf("Expected %v, got %v", output, image)
+			}
+		}
+	}
+}
+
+func TestFloodFill3(t *testing.T) {
+	image := [][]int{
+		{0, 0, 0},
+		{0, 1, 1},
+	}
+
+	output := [][]int{
+		{0, 0, 0},
+		{0, 1, 1},
+	}
+
+	leet.FloodFill(image, 1, 1, 1)
+
+	for i := 0; i < len(output); i++ {
+		for j := 0; j < len(output[0]); j++ {
+			if output[i][j] != image[i][j] {
+				t.Errorf("Expected %v, got %v", output, image)
+			}
+		}
+	}
+}
+
+func TestMaxAreaOfIsland(t *testing.T) {
+
+	grid := [][]int{
+		{0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+		{0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+		{0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0},
+		{0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0},
+	}
+
+	res := leet.MaxAreaOfIsland(grid)
+
+	if res != 6 {
+		t.Errorf("Expected 6 but got %v", res)
+	}
+
+}
+
+func TestMaxAreaOfIsland2(t *testing.T) {
+
+	grid := [][]int{
+		{0, 1},
+		{1, 1},
+	}
+
+	res := leet.MaxAreaOfIsland(grid)
+
+	if res != 3 {
+		t.Errorf("Expected 6 but got %v", res)
+	}
+
+}
+
+func TestIslandPerimeter(t *testing.T) {
+	input := [][]int{{0, 1, 0, 0}, {1, 1, 1, 0}, {0, 1, 0, 0}, {1, 1, 0, 0}}
+
+	res := leet.IslandPerimeter(input)
+	if res != 16 {
+		t.Errorf("Expected 16, got %v", res)
+	}
+}

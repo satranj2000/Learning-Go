@@ -287,3 +287,44 @@ func treeHeight(root *TreeNode) int {
 		return rightHeight
 	}
 }
+
+func inorderTraversalNoRecursion(root *TreeNode) {
+
+}
+
+//https://leetcode.com/problems/merge-two-binary-trees/
+func mergeTrees(root1 *TreeNode, root2 *TreeNode) *TreeNode {
+	if root1 == nil && root2 == nil {
+		return nil
+	}
+	var root1val, root2val int
+
+	if root1 == nil {
+		root1val = 0
+	} else {
+		root1val = root1.Val
+	}
+
+	if root2 == nil {
+		root2val = 0
+	} else {
+		root2val = root2.Val
+	}
+	mergedVals := root1val + root2val
+
+	newRoot := &TreeNode{Val: mergedVals}
+
+	if root1 == nil || root2 == nil {
+		if root1 == nil {
+			newRoot.Left = mergeTrees(nil, root2.Left)
+			newRoot.Right = mergeTrees(nil, root2.Right)
+		} else if root2 == nil {
+			newRoot.Left = mergeTrees(root1.Left, nil)
+			newRoot.Right = mergeTrees(root1.Right, nil)
+		}
+	} else {
+		newRoot.Left = mergeTrees(root1.Left, root2.Left)
+		newRoot.Right = mergeTrees(root1.Right, root2.Right)
+	}
+	return newRoot
+}

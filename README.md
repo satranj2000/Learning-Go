@@ -2,7 +2,7 @@
 
 This project is used as my personal play ground for learning Golang. 
 
-There are different folders / packages. Some of them are mentioned below. 
+There are different folders / packages. Most of my changes and work is on these folders/packages. 
 
 - DataStructs (This package has all the learnings/programs and test cases related to various data structures)
   - Queue

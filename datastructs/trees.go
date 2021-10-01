@@ -1,6 +1,8 @@
 package datastructs
 
 import (
+	"errors"
+	"log"
 	"math"
 	"sort"
 )
@@ -352,4 +354,127 @@ func minDepth(root *TreeNode) int {
 	} else {
 		return leftHeight
 	}
+}
+
+// level order traversal. go through the tree level by level and return array of those values.
+func levelOrderValues(root *TreeNode) []int {
+	q := QueueTrees{}
+	levelVal := []int{}
+	q.Enqueue(root)
+
+	for !q.IsEmpty() {
+		currTree, _ := q.Dequeue()
+		levelVal = append(levelVal, currTree.Val)
+		if currTree.Left != nil {
+			q.Enqueue(currTree.Left)
+		}
+		if currTree.Right != nil {
+			q.Enqueue(currTree.Right)
+		}
+	}
+	return levelVal
+}
+
+// in this case return an slice of slice. Each slice contains the values in that level.
+func levelOrder(root *TreeNode) [][]int {
+	if root == nil {
+		return [][]int{}
+	}
+	q := QueueTrees{}
+	Levels := [][]int{}
+	q.Enqueue(root)
+
+	for !q.IsEmpty() {
+		sz := q.Size()
+		currLevel := []int{}
+		for i := 0; i < sz; i++ {
+			currTree, _ := q.Dequeue()
+			currLevel = append(currLevel, currTree.Val)
+			if currTree.Left != nil {
+				q.Enqueue(currTree.Left)
+			}
+			if currTree.Right != nil {
+				q.Enqueue(currTree.Right)
+			}
+		}
+		if len(currLevel) > 0 {
+			Levels = append(Levels, currLevel)
+		}
+	}
+	return Levels
+}
+
+// return average at each level
+func averageOfLevels(root *TreeNode) []float64 {
+	if root == nil {
+		return []float64{}
+	}
+	q := QueueTrees{}
+	AvgLvl := []float64{}
+	q.Enqueue(root)
+
+	for !q.IsEmpty() {
+		sz := q.Size()
+		currLevel := []int{}
+		for i := 0; i < sz; i++ {
+			currTree, _ := q.Dequeue()
+			currLevel = append(currLevel, currTree.Val)
+			if currTree.Left != nil {
+				q.Enqueue(currTree.Left)
+			}
+			if currTree.Right != nil {
+				q.Enqueue(currTree.Right)
+			}
+		}
+		if len(currLevel) > 0 {
+			sum := 0.0
+			for i := 0; i < len(currLevel); i++ {
+				sum += float64(currLevel[i])
+			}
+			AvgLvl = append(AvgLvl, sum/float64(len(currLevel)))
+		}
+	}
+	return AvgLvl
+}
+
+type QueueTrees struct {
+	items       []*TreeNode
+	bInitialize bool
+	maxsz       int
+	currmax     int
+	currmin     int
+}
+
+func (q *QueueTrees) Enqueue(d *TreeNode) error {
+	if !q.bInitialize {
+		q.bInitialize = true
+		q.maxsz = 4096
+		q.currmax = 0
+		q.currmin = 0
+		q.items = make([]*TreeNode, q.maxsz)
+	}
+	if q.currmax > q.maxsz {
+		log.Println("Cannot allocate more than 4096 values in the queue")
+		return errors.New("cannot allocate more than 4096 values in the queue")
+	}
+	q.items[q.currmax] = d
+	q.currmax++
+	return nil
+}
+
+func (q *QueueTrees) Dequeue() (*TreeNode, error) {
+	if q.IsEmpty() {
+		return nil, errors.New("empty queue")
+	}
+	val := q.items[q.currmin]
+	q.currmin++
+	return val, nil
+}
+
+func (q *QueueTrees) Size() int {
+	return q.currmax - q.currmin
+}
+
+func (q *QueueTrees) IsEmpty() bool {
+	return (q.currmax <= q.currmin)
 }

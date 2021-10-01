@@ -727,3 +727,200 @@ func TestMinDepth2(t *testing.T) {
 		t.Errorf("Expected min depth is 2, got %v", res)
 	}
 }
+
+func TestLevelOrderOrderTraversalArr(t *testing.T) {
+	root := &TreeNode{10, nil, nil}
+	root.Left = &TreeNode{20, nil, nil}
+	root.Right = &TreeNode{30, nil, nil}
+	root.Right.Right = &TreeNode{60, nil, nil}
+	root.Right.Right.Left = &TreeNode{70, nil, nil}
+
+	output := []int{10, 20, 30, 60, 70}
+
+	res := levelOrderValues(root)
+
+	if !CompareArrays(output, res) {
+		t.Errorf("Expected %v, got %v", output, res)
+	}
+}
+
+func TestLevelOrderOrderTraversalArr1(t *testing.T) {
+	root := &TreeNode{10, nil, nil}
+	root.Left = &TreeNode{20, nil, nil}
+	root.Right = &TreeNode{30, nil, nil}
+
+	output := []int{10, 20, 30}
+
+	res := levelOrderValues(root)
+
+	if !CompareArrays(output, res) {
+		t.Errorf("Expected %v, got %v", output, res)
+	}
+}
+
+func TestLevelOrderOrderTraversalArr3(t *testing.T) {
+	root := &TreeNode{10, nil, nil}
+
+	output := []int{10}
+
+	res := levelOrderValues(root)
+
+	if !CompareArrays(output, res) {
+		t.Errorf("Expected %v, got %v", output, res)
+	}
+}
+
+func TestLevelOrders(t *testing.T) {
+	root := &TreeNode{10, nil, nil}
+	root.Left = &TreeNode{20, nil, nil}
+	root.Right = &TreeNode{30, nil, nil}
+	root.Right.Right = &TreeNode{60, nil, nil}
+	root.Right.Right.Left = &TreeNode{70, nil, nil}
+
+	output := [][]int{{10}, {20, 30}, {60}, {70}}
+
+	res := levelOrder(root)
+
+	var errout bool
+	for i := 0; i < len(output); i++ {
+		for j := 0; j < len(output[i]); j++ {
+			if output[i][j] != res[i][j] {
+				errout = true
+			}
+		}
+	}
+	if errout {
+		t.Errorf("Expected %v, got %v", output, res)
+	}
+}
+
+func TestLevelOrders2(t *testing.T) {
+	root := &TreeNode{10, nil, nil}
+	root.Left = &TreeNode{20, nil, nil}
+	root.Right = &TreeNode{30, nil, nil}
+
+	output := [][]int{{10}, {20, 30}}
+
+	res := levelOrder(root)
+
+	var errout bool
+	for i := 0; i < len(output); i++ {
+		for j := 0; j < len(output[i]); j++ {
+			if output[i][j] != res[i][j] {
+				errout = true
+			}
+		}
+	}
+	if errout {
+		t.Errorf("Expected %v, got %v", output, res)
+	}
+}
+
+func TestLevelOrders3(t *testing.T) {
+	root := &TreeNode{10, nil, nil}
+	output := [][]int{{10}}
+
+	res := levelOrder(root)
+
+	var errout bool
+	for i := 0; i < len(output); i++ {
+		for j := 0; j < len(output[i]); j++ {
+			if output[i][j] != res[i][j] {
+				errout = true
+			}
+		}
+	}
+	if errout {
+		t.Errorf("Expected %v, got %v", output, res)
+	}
+}
+
+// nil case - where root is nil
+func TestLevelOrders4(t *testing.T) {
+
+	output := [][]int{{}}
+
+	res := levelOrder(nil)
+
+	var errout bool
+	for i := 0; i < len(output); i++ {
+		for j := 0; j < len(output[i]); j++ {
+			if output[i][j] != res[i][j] {
+				errout = true
+			}
+		}
+	}
+	if errout {
+		t.Errorf("Expected %v, got %v", output, res)
+	}
+}
+
+func TestAverageLevels1(t *testing.T) {
+	root := &TreeNode{10, nil, nil}
+	root.Left = &TreeNode{20, nil, nil}
+	root.Right = &TreeNode{30, nil, nil}
+
+	output := []float64{10.0, 25.0}
+
+	res := averageOfLevels(root)
+
+	for i := 0; i < len(output); i++ {
+		if res[i] != output[i] {
+			t.Errorf("Expected %v, got %v", output[i], res[i])
+		}
+	}
+}
+
+func TestAverageLevels2(t *testing.T) {
+	root := &TreeNode{10, nil, nil}
+	root.Left = &TreeNode{20, nil, nil}
+	root.Right = &TreeNode{30, nil, nil}
+	root.Left.Left = &TreeNode{10, nil, nil}
+	root.Left.Right = &TreeNode{10, nil, nil}
+	root.Right.Left = &TreeNode{10, nil, nil}
+	root.Right.Right = &TreeNode{10, nil, nil}
+
+	output := []float64{10.0, 25.0, 10.0}
+
+	res := averageOfLevels(root)
+
+	for i := 0; i < len(output); i++ {
+		if res[i] != output[i] {
+			t.Errorf("Expected %v, got %v", output[i], res[i])
+		}
+	}
+}
+
+func TestAverageLevels3(t *testing.T) {
+
+	root := &TreeNode{10, nil, nil}
+	output := []float64{10.0}
+
+	res := averageOfLevels(root)
+
+	for i := 0; i < len(output); i++ {
+		if res[i] != output[i] {
+			t.Errorf("Expected %v, got %v", output[i], res[i])
+		}
+	}
+}
+
+func TestAverageLevels4(t *testing.T) {
+	root := &TreeNode{10, nil, nil}
+	root.Left = &TreeNode{20, nil, nil}
+	root.Right = &TreeNode{30, nil, nil}
+	root.Left.Left = &TreeNode{1, nil, nil}
+	root.Left.Right = &TreeNode{2, nil, nil}
+	root.Right.Left = &TreeNode{3, nil, nil}
+	root.Right.Right = &TreeNode{4, nil, nil}
+
+	output := []float64{10.0, 25.0, 2.5}
+
+	res := averageOfLevels(root)
+
+	for i := 0; i < len(output); i++ {
+		if res[i] != output[i] {
+			t.Errorf("Expected %v, got %v", output[i], res[i])
+		}
+	}
+}

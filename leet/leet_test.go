@@ -817,3 +817,99 @@ func TestIslandPerimeter(t *testing.T) {
 		t.Errorf("Expected 16, got %v", res)
 	}
 }
+
+func TestUpdateMatrix(t *testing.T) {
+	input := [][]int{
+		{0, 0, 0}, {0, 1, 0}, {0, 0, 0},
+	}
+
+	output := [][]int{
+		{0, 0, 0}, {0, 1, 0}, {0, 0, 0},
+	}
+
+	res := leet.UpdateMatrix(input)
+
+	if !Compare2dArrayValues(res, output) {
+		t.Errorf("Expected %v, got %v", output, res)
+	}
+}
+
+func TestUpdateMatrix2(t *testing.T) {
+	input := [][]int{
+		{0, 0, 0}, {0, 1, 0}, {1, 1, 1},
+	}
+
+	output := [][]int{
+		{0, 0, 0}, {0, 1, 0}, {1, 2, 1},
+	}
+
+	res := leet.UpdateMatrix(input)
+
+	if !Compare2dArrayValues(res, output) {
+		t.Errorf("Expected %v, got %v", output, res)
+	}
+}
+
+func TestUpdateMatrix3(t *testing.T) {
+	input := [][]int{{1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1},
+		{1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1},
+		{1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {0, 0, 0}}
+
+	output := [][]int{
+		{0, 0, 0}, {0, 1, 0}, {1, 2, 1},
+	}
+
+	res := leet.UpdateMatrix(input)
+
+	if !Compare2dArrayValues(res, output) {
+		t.Errorf("Expected %v, got %v", output, res)
+	}
+}
+
+func TestOrangesRotting(t *testing.T) {
+	input := [][]int{
+		{2, 1, 1}, {1, 1, 0}, {0, 1, 1},
+	}
+
+	res := leet.OrangesRotting(input)
+	if res != 4 {
+		t.Errorf("Expected 4, got %v", res)
+	}
+
+}
+
+func TestOrangesRotting2(t *testing.T) {
+	input := [][]int{
+		{2, 1, 1}, {0, 1, 1}, {1, 0, 1},
+	}
+
+	res := leet.OrangesRotting(input)
+	if res != -1 {
+		t.Errorf("Expected -1, got %v", res)
+	}
+
+}
+
+func TestOrangesRotting3(t *testing.T) {
+	input := [][]int{
+		{0, 2},
+	}
+
+	res := leet.OrangesRotting(input)
+	if res != 0 {
+		t.Errorf("Expected 0, got %v", res)
+	}
+
+}
+
+func TestOrangesRotting4(t *testing.T) {
+	input := [][]int{
+		{2, 1, 1}, {1, 1, 1}, {0, 1, 2},
+	}
+
+	res := leet.OrangesRotting(input)
+	if res != 2 {
+		t.Errorf("Expected 2, got %v", res)
+	}
+
+}

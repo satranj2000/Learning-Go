@@ -191,9 +191,42 @@ func (g *Graph) traverseCount(pos int, visited map[int]bool) int {
 		return 0
 	}
 	visited[pos] = true
-	cnt := 1
+	cnt := 1 // since we visited this position now set it to 1.
 	for _, v := range g.nodes[pos].edges {
-		cnt += g.traverseCount(v, visited)
+		cnt += g.traverseCount(v, visited) // combine all the counts
 	}
 	return cnt
+}
+
+func (g *Graph) ShortestPath(start int, end int) int {
+	// use breadth first for finding the shortest path.
+	visited := make(map[int]bool)
+	// 2 queues. one to track the node we are visiting and another to track the distance of the node from start.
+	q := Queue{}
+	qlen := Queue{}
+
+	// first initialized to 0 length.
+	q.Enqueue(start)
+	qlen.Enqueue(0)
+	visited[start] = true
+
+	for !q.IsEmpty() {
+		outval, _ := q.Dequeue()
+		outvalLen, _ := qlen.Dequeue()
+		if outval == end {
+			return outvalLen
+		}
+
+		for _, e := range g.nodes[outval].edges {
+			if !visited[e] {
+				q.Enqueue(e)
+				qlen.Enqueue(outvalLen + 1)
+				visited[e] = true
+				if e == end {
+					return outvalLen + 1
+				}
+			}
+		}
+	}
+	return -1
 }

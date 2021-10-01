@@ -326,3 +326,38 @@ func TestFindMaxGraphGroupCount3(t *testing.T) {
 	}
 
 }
+
+func TestShortestPath(t *testing.T) {
+	n1 := &GraphNode{Val: 1, edges: []int{2, 3}}
+	n2 := &GraphNode{Val: 2, edges: []int{1, 4}}
+	n3 := &GraphNode{Val: 3, edges: []int{1, 4}}
+	n4 := &GraphNode{Val: 4, edges: []int{2, 3}}
+	n7 := &GraphNode{Val: 7, edges: []int{8, 9}}
+	n8 := &GraphNode{Val: 8, edges: []int{7}}
+	n9 := &GraphNode{Val: 9, edges: []int{9}}
+
+	g := Graph{}
+
+	g.AddNode(n1)
+	g.AddNode(n2)
+	g.AddNode(n3)
+	g.AddNode(n4)
+	g.AddNode(n7)
+	g.AddNode(n8)
+	g.AddNode(n9)
+
+	res := g.ShortestPath(1, 4)
+	if res != 2 {
+		t.Errorf("Expected the shortest path between 1 and 4 as 2. But, got %v", res)
+	}
+
+	res = g.ShortestPath(7, 9)
+	if res != 1 {
+		t.Errorf("Expected the shortest path between 7 and 9 as 1. But, got %v", res)
+	}
+
+	res = g.ShortestPath(1, 9)
+	if res != -1 {
+		t.Errorf("Expected the shortest path between 7 and 9 as -1(not found). But, got %v", res)
+	}
+}

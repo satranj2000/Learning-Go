@@ -1,6 +1,7 @@
 package leet
 
 import (
+	"errors"
 	"log"
 	"math"
 	"math/rand"
@@ -1667,13 +1668,205 @@ func IslandPerimeter(grid [][]int) int {
 	return perimeter
 }
 
-func updateMatrix(mat [][]int) [][]int {
-	nearMat := make([][]int, len(mat))
+func UpdateMatrix(mat [][]int) [][]int {
+
 	for i := 0; i < len(mat); i++ {
-		nearMat[i] = make([]int, len(mat[0]))
+		for j := 0; j < len(mat[0]); j++ {
+			if mat[i][j] != 0 {
+				pathlen := findShortestPathtoZero(mat, i, j)
+				mat[i][j] = pathlen
+			}
+		}
+
 	}
 
-	// not yet completed.
-	return nearMat
+	return mat
 
+}
+
+// nearest 0 in the matrix
+// there still a problem. it errors out with memory issue for the 3rd test case.
+func findShortestPathtoZero(mat [][]int, cr int, cc int) int {
+	q := Queue{}
+	q.Enqueue(RowColLen{r: cr, c: cc, len: 0})
+
+	// created a visited matrix.
+	visited := make([][]int, len(mat))
+	for i := 0; i < len(mat); i++ {
+		visited[i] = make([]int, len(mat[0]))
+	}
+	visited[cr][cc] = 1
+
+	defer func() {
+		q.Clear()
+	}()
+
+	for !q.IsEmpty() {
+		rcl, _ := q.Dequeue()
+		if mat[rcl.r][rcl.c] == 0 {
+			return rcl.len
+		}
+
+		// add all the edges (bottom, top) - up and down of a row
+		if rcl.r+1 < len(mat) {
+			if mat[rcl.r+1][rcl.c] == 0 {
+				return rcl.len + 1
+			}
+			if visited[rcl.r+1][rcl.c] == 0 {
+				q.Enqueue(RowColLen{r: rcl.r + 1, c: rcl.c, len: rcl.len + 1})
+			}
+
+		}
+		if rcl.r-1 >= 0 {
+			if mat[rcl.r-1][rcl.c] == 0 {
+				return rcl.len + 1
+			}
+			if visited[rcl.r-1][rcl.c] == 0 {
+				q.Enqueue(RowColLen{r: rcl.r - 1, c: rcl.c, len: rcl.len + 1})
+			}
+		}
+
+		// add the columns left and right
+		if rcl.c+1 < len(mat[0]) {
+			if mat[rcl.r][rcl.c+1] == 0 {
+				return rcl.len + 1
+			}
+			if visited[rcl.r][rcl.c+1] == 0 {
+				q.Enqueue(RowColLen{r: rcl.r, c: rcl.c + 1, len: rcl.len + 1})
+			}
+		}
+
+		if rcl.c-1 >= 0 {
+			if mat[rcl.r][rcl.c-1] == 0 {
+				return rcl.len + 1
+			}
+			if visited[rcl.r][rcl.c-1] == 0 {
+				q.Enqueue(RowColLen{r: rcl.r, c: rcl.c - 1, len: rcl.len + 1})
+			}
+		}
+	}
+	return -1
+}
+
+type RowColLen struct {
+	r   int
+	c   int
+	len int
+}
+
+type Queue struct {
+	items       []RowColLen
+	bInitialize bool
+	maxsz       int
+	currmax     int
+	currmin     int
+}
+
+func (q *Queue) Enqueue(d RowColLen) error {
+	if !q.bInitialize {
+		q.bInitialize = true
+		q.maxsz = 4096
+		q.currmax = 0
+		q.currmin = 0
+		q.items = make([]RowColLen, q.maxsz)
+	}
+	if q.currmax > q.maxsz {
+		log.Println("Cannot allocate more than 1024 values in the queue")
+		return errors.New("cannot allocate more than 1024 values in the queue")
+	}
+	q.items[q.currmax] = d
+	q.currmax++
+	return nil
+}
+
+func (q *Queue) Dequeue() (RowColLen, error) {
+	if q.IsEmpty() {
+		return RowColLen{}, errors.New("empty queue")
+	}
+	val := q.items[q.currmin]
+	q.currmin++
+	return val, nil
+}
+
+func (q *Queue) IsEmpty() bool {
+	return (q.currmax <= q.currmin)
+}
+
+func (q *Queue) Clear() {
+	q.items = nil
+}
+
+//https://leetcode.com/problems/rotting-oranges/
+func OrangesRotting(grid [][]int) int {
+	rotten := 0
+	fresh := 0
+	rottenList := make([]RowColLen, 0)
+	visited := make([][]bool, len(grid))
+	for k := 0; k < len(grid); k++ {
+		visited[k] = make([]bool, len(grid[0]))
+	}
+	for i := 0; i < len(grid); i++ {
+		for j := 0; j < len(grid[0]); j++ {
+			if grid[i][j] == 2 {
+				rotten++
+				rottenList = append(rottenList, RowColLen{r: i, c: j})
+			}
+			if grid[i][j] == 1 {
+				fresh++
+			}
+		}
+	}
+	// find number of rotten and fresh oranges.
+	// if no fresh orange return 0.
+	if fresh == 0 {
+		return 0
+	}
+	q := Queue{}
+
+	for _, rc := range rottenList {
+		q.Enqueue(rc)
+	}
+
+	onetimeloop := len(rottenList)
+	freshcp := fresh
+	cnt := 0
+	for !q.IsEmpty() && freshcp > 0 {
+		newadds := 0
+		for i := 0; i < onetimeloop; i++ {
+			rc, _ := q.Dequeue()
+			visited[rc.r][rc.c] = true
+			if rc.r+1 < len(grid) && grid[rc.r+1][rc.c] == 1 && !visited[rc.r+1][rc.c] {
+				freshcp--
+				grid[rc.r+1][rc.c] = 2
+				q.Enqueue(RowColLen{r: rc.r + 1, c: rc.c})
+				newadds++
+			}
+			if rc.r-1 >= 0 && grid[rc.r-1][rc.c] == 1 && !visited[rc.r-1][rc.c] {
+				freshcp--
+				grid[rc.r-1][rc.c] = 2
+				q.Enqueue(RowColLen{r: rc.r - 1, c: rc.c})
+				newadds++
+			}
+			if rc.c+1 < len(grid[0]) && grid[rc.r][rc.c+1] == 1 && !visited[rc.r][rc.c+1] {
+				freshcp--
+				grid[rc.r][rc.c+1] = 2
+				q.Enqueue(RowColLen{r: rc.r, c: rc.c + 1})
+				newadds++
+			}
+			if rc.c-1 >= 0 && grid[rc.r][rc.c-1] == 1 && !visited[rc.r][rc.c-1] {
+				freshcp--
+				grid[rc.r][rc.c-1] = 2
+				q.Enqueue(RowColLen{r: rc.r, c: rc.c - 1})
+				newadds++
+			}
+		}
+		if freshcp > 0 {
+			onetimeloop = newadds
+		}
+		cnt++
+	}
+	if freshcp > 0 {
+		return -1
+	}
+	return cnt
 }

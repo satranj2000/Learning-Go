@@ -29,13 +29,13 @@ func TestQueue2(t *testing.T) {
 	outputs := []int{10}
 
 	myQueue.Enqueue(inputs[0])
-	v, _ := myQueue.Dequeue()
+	v, err := myQueue.Dequeue()
 	if v != outputs[0] {
 		t.Errorf("Wrong pop. Expected %v ", outputs[0])
 	}
 
-	_, err := myQueue.Dequeue()
+	_, err = myQueue.Dequeue()
 	if err == nil {
-		t.Errorf("Excepted an error. But got nil ")
+		t.Errorf("Expected an error. did not recieved it")
 	}
 }

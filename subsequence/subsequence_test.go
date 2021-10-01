@@ -46,3 +46,90 @@ func TestGetRowPascalTriangle(t *testing.T) {
 		}
 	}
 }
+
+func TestCombine(t *testing.T) {
+	outputs := [][]int{
+		{1, 2},
+		{1, 3},
+		{1, 4},
+		{2, 3},
+		{2, 4},
+		{3, 4},
+	}
+	res := subsequence.Combine(4, 2)
+
+	for i := 0; i < len(outputs); i++ {
+		for j := 0; j < len(outputs[0]); j++ {
+			if res[i][j] != outputs[i][j] {
+				t.Errorf("Expected %v, got %v", outputs, res)
+			}
+		}
+	}
+}
+
+func TestCombine2(t *testing.T) {
+	outputs := [][]int{
+		{1, 2, 3},
+		{1, 2, 4},
+		{1, 3, 4},
+		{2, 3, 4},
+	}
+	res := subsequence.Combine(4, 3)
+
+	for i := 0; i < len(outputs); i++ {
+		for j := 0; j < len(outputs[0]); j++ {
+			if res[i][j] != outputs[i][j] {
+				t.Errorf("Expected %v, got %v", outputs, res)
+			}
+		}
+	}
+}
+
+func TestCombine3(t *testing.T) {
+	outputs := [][]int{
+		{1, 2, 3, 4},
+	}
+	res := subsequence.Combine(4, 4)
+
+	for i := 0; i < len(outputs); i++ {
+		for j := 0; j < len(outputs[0]); j++ {
+			if res[i][j] != outputs[i][j] {
+				t.Errorf("Expected %v, got %v", outputs, res)
+			}
+		}
+	}
+}
+
+func TestCombine4(t *testing.T) {
+	outputs := [][]int{
+		{1},
+	}
+	res := subsequence.Combine(1, 1)
+
+	for i := 0; i < len(outputs); i++ {
+		for j := 0; j < len(outputs[0]); j++ {
+			if res[i][j] != outputs[i][j] {
+				t.Errorf("Expected %v, got %v", outputs, res)
+			}
+		}
+	}
+}
+
+func TestCombine5(t *testing.T) {
+	outputs := [][]int{
+		{1}, {2},
+	}
+	res := subsequence.Combine(2, 1)
+
+	if len(outputs) != len(res) {
+		t.Errorf("Expected %v, got %v", outputs, res)
+	}
+
+	for i := 0; i < len(outputs); i++ {
+		for j := 0; j < len(outputs[0]); j++ {
+			if res[i][j] != outputs[i][j] {
+				t.Errorf("Expected %v, got %v", outputs, res)
+			}
+		}
+	}
+}

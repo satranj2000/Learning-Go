@@ -8,21 +8,33 @@ import (
 )
 
 func Combine(n int, k int) [][]int {
-	var arr []int
-	for i := 1; i <= n; i++ {
-		arr = append(arr, i)
+	allcombo := [][]int{}
+	currcomb := []int{}
+
+	// when k == 1
+	if k == 1 {
+		for i := 1; i <= n; i++ {
+			currcomb = append(currcomb, i)
+			allcombo = append(allcombo, currcomb)
+			currcomb = []int{}
+		}
+		return allcombo
 	}
-	allcombo := FindAllCombo(arr)
-	var combs [][]int
-	fmt.Println(allcombo)
-	for _, c := range allcombo {
-		if len(c) == k {
-			val := c
-			sort.Ints(val)
-			combs = append(combs, val)
+
+	// all other cases where k > 1
+	for i := 1; i <= n; i++ {
+		for j := i; j <= n; j++ {
+			currcomb = append(currcomb, i)
+			for m := 1; m < k && j+m <= n; m++ {
+				currcomb = append(currcomb, j+m)
+			}
+			if len(currcomb) == k {
+				allcombo = append(allcombo, currcomb)
+			}
+			currcomb = []int{}
 		}
 	}
-	return combs
+	return allcombo
 }
 
 func PermuteUnique(nums []int) [][]int {

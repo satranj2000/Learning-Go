@@ -138,19 +138,6 @@ func isBalanced(root *TreeNode) bool {
 	return math.Abs(float64(lsize)-float64(rsize)) <= 1 && isBalanced(root.Left) && isBalanced(root.Right)
 }
 
-// not yet fully working.. need to continue working on this.
-func minDepth(root *TreeNode) int {
-	if root == nil {
-		return 0
-	}
-
-	lsize := maxDepth(root.Left)
-	rsize := maxDepth(root.Right)
-
-	return int(math.Min(float64(lsize), float64(rsize)))
-
-}
-
 func searchBST(root *TreeNode, val int) *TreeNode {
 
 	for root != nil {
@@ -327,4 +314,42 @@ func mergeTrees(root1 *TreeNode, root2 *TreeNode) *TreeNode {
 		newRoot.Right = mergeTrees(root1.Right, root2.Right)
 	}
 	return newRoot
+}
+
+// min depth is same as max depth with a slight difference. Send the min back and not the max value.
+// We send min in all cases expect if one of the sides is zero, then we send the other one
+//https://leetcode.com/problems/minimum-depth-of-binary-tree/
+func minDepth(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+
+	var leftHeight, rightHeight int
+
+	if root.Left == nil && root.Right == nil {
+		return 1
+	}
+
+	if root.Left != nil {
+		leftHeight = minDepth(root.Left) + 1
+	}
+
+	if root.Right != nil {
+		rightHeight = minDepth(root.Right) + 1
+	}
+
+	// if the left side height is zero, send the right side.
+	if leftHeight == 0 {
+		return rightHeight
+	}
+	// if right side height is zero, send the left side.
+	if rightHeight == 0 {
+		return leftHeight
+	}
+	// if both heights are provided, send the min back.
+	if leftHeight > rightHeight {
+		return rightHeight
+	} else {
+		return leftHeight
+	}
 }

@@ -695,3 +695,35 @@ func TestMergeTrees2(t *testing.T) {
 		t.Errorf("Expected %v, got %v", output, reslist)
 	}
 }
+
+func TestMinDepth(t *testing.T) {
+
+	root := &TreeNode{10, nil, nil}
+	root.Left = &TreeNode{20, nil, nil}
+	root.Right = &TreeNode{30, nil, nil}
+	root.Left.Left = &TreeNode{40, nil, nil}
+	root.Left.Right = &TreeNode{50, nil, nil}
+	root.Right.Right = &TreeNode{60, nil, nil}
+	root.Left.Left.Left = &TreeNode{70, nil, nil}
+
+	res := minDepth(root)
+
+	if res != 3 {
+		t.Errorf("Expected min depth is 3, got %v", res)
+	}
+}
+
+func TestMinDepth2(t *testing.T) {
+
+	root := &TreeNode{10, nil, nil}
+	root.Left = &TreeNode{20, nil, nil}
+	root.Right = &TreeNode{30, nil, nil}
+	root.Right.Right = &TreeNode{60, nil, nil}
+	root.Right.Right.Left = &TreeNode{70, nil, nil}
+
+	res := minDepth(root)
+
+	if res != 2 {
+		t.Errorf("Expected min depth is 2, got %v", res)
+	}
+}

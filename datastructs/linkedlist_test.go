@@ -90,19 +90,7 @@ func TestOddEvenList5(t *testing.T) {
 }
 
 func TestBrowserHistory(t *testing.T) {
-	obj := Constructor("leetcode.com")
-	obj.Visit("google.com")
-	obj.Visit("facebook.com")
-	obj.Visit("youtube.com")
-
-	param_2 := obj.Back(1)
-	if param_2 != "facebook.com" {
-		t.Errorf("Expected facebook.com, got %v", param_2)
-	}
-	param_2 = obj.Back(1)
-	if param_2 != "google.com" {
-		t.Errorf("Expected google.com, got %v", param_2)
-	}
+	// not yet done.
 }
 
 func TestReverseList(t *testing.T) {

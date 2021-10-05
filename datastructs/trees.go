@@ -404,6 +404,40 @@ func levelOrder(root *TreeNode) [][]int {
 	return Levels
 }
 
+// level order but from leaf to root
+func levelOrderBottom(root *TreeNode) [][]int {
+	if root == nil {
+		return [][]int{}
+	}
+	q := QueueTrees{}
+	Levels := [][]int{}
+	q.Enqueue(root)
+
+	for !q.IsEmpty() {
+		sz := q.Size()
+		currLevel := []int{}
+		for i := 0; i < sz; i++ {
+			currTree, _ := q.Dequeue()
+			currLevel = append(currLevel, currTree.Val)
+			if currTree.Left != nil {
+				q.Enqueue(currTree.Left)
+			}
+			if currTree.Right != nil {
+				q.Enqueue(currTree.Right)
+			}
+		}
+		if len(currLevel) > 0 {
+			Levels = append(Levels, currLevel)
+		}
+	}
+	// create a new slice of slices and store all values in reverse
+	revLevels := [][]int{}
+	for i := len(Levels) - 1; i >= 0; i-- {
+		revLevels = append(revLevels, Levels[i])
+	}
+	return revLevels
+}
+
 // return average at each level
 func averageOfLevels(root *TreeNode) []float64 {
 	if root == nil {

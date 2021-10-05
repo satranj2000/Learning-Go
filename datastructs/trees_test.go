@@ -924,3 +924,49 @@ func TestAverageLevels4(t *testing.T) {
 		}
 	}
 }
+
+func TestLevelOrderBottom(t *testing.T) {
+	root := &TreeNode{10, nil, nil}
+	root.Left = &TreeNode{20, nil, nil}
+	root.Right = &TreeNode{30, nil, nil}
+	root.Right.Right = &TreeNode{60, nil, nil}
+	root.Right.Right.Left = &TreeNode{70, nil, nil}
+
+	output := [][]int{{70}, {60}, {20, 30}, {10}}
+
+	res := levelOrderBottom(root)
+
+	var errout bool
+	for i := 0; i < len(output); i++ {
+		for j := 0; j < len(output[i]); j++ {
+			if output[i][j] != res[i][j] {
+				errout = true
+			}
+		}
+	}
+	if errout {
+		t.Errorf("Expected %v, got %v", output, res)
+	}
+}
+
+func TestLevelOrderBottom2(t *testing.T) {
+	root := &TreeNode{10, nil, nil}
+	root.Left = &TreeNode{20, nil, nil}
+	root.Right = &TreeNode{30, nil, nil}
+
+	output := [][]int{{20, 30}, {10}}
+
+	res := levelOrderBottom(root)
+
+	var errout bool
+	for i := 0; i < len(output); i++ {
+		for j := 0; j < len(output[i]); j++ {
+			if output[i][j] != res[i][j] {
+				errout = true
+			}
+		}
+	}
+	if errout {
+		t.Errorf("Expected %v, got %v", output, res)
+	}
+}

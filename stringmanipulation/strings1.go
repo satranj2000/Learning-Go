@@ -528,3 +528,57 @@ func GetDecimalValue(head *ListNode) int {
 	val, _ := strconv.ParseInt(boolStr, 2, 0)
 	return int(val)
 }
+
+//https://leetcode.com/problems/number-of-valid-words-in-a-sentence/
+func CountValidWords(sentence string) int {
+	words := strings.Split(sentence, " ")
+	cnt := 0
+	for _, w := range words {
+		if isvalidToken(w) {
+			log.Print(w)
+			cnt++
+		}
+	}
+	return cnt
+}
+
+func isvalidToken(token string) bool {
+	l := len(token)
+	cntPunct := 0
+	cntHyphen := 0
+	if l == 0 {
+		return false
+	}
+	for i, c := range token {
+		if c == '!' || c == '.' || c == ',' {
+			cntPunct++
+			if l-1 != i {
+				return false // only last character in the token can be punctuation mark
+			}
+			if cntPunct > 1 {
+				return false
+			}
+		}
+		if c >= 48 && c <= 57 {
+			return false
+		}
+		if c == '-' {
+			cntHyphen++
+			if cntHyphen > 1 {
+				return false
+			}
+		}
+		if (i == 0 && c == '-') || (i == l-1 && c == '-') {
+			return false
+		}
+		if c == '-' {
+			if !(token[i-1] >= 'a' && token[i-1] <= 'z') {
+				return false
+			}
+			if !(token[i+1] >= 'a' && token[i+1] <= 'z') {
+				return false
+			}
+		}
+	}
+	return true
+}

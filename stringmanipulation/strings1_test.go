@@ -283,3 +283,21 @@ func TestCountValidWords(t *testing.T) {
 		}
 	}
 }
+
+func TestWinnerOfGame(t *testing.T) {
+	inputstr := []string{
+		"AAABABB",
+		"AA",
+		"ABBBBBBBAAA",
+	}
+	output := []bool{
+		true, false, false,
+	}
+
+	for i, input := range inputstr {
+		res := stringmanipulation.WinnerOfGame(input)
+		if res != output[i] {
+			t.Errorf("Expected %v, got %v for string %v", res, output[i], input)
+		}
+	}
+}

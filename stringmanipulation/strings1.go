@@ -582,3 +582,44 @@ func isvalidToken(token string) bool {
 	}
 	return true
 }
+
+//https://leetcode.com/problems/remove-colored-pieces-if-both-neighbors-are-the-same-color/
+func WinnerOfGame(colors string) bool {
+	ACnt := 0
+	BCnt := 0
+	l := len(colors)
+
+	for i := 0; i < l; {
+		if colors[i] == 'A' {
+			cnt := 0
+			j := 0
+			for j = i; j < l && colors[j] == 'A'; j++ {
+				cnt++
+			}
+			if cnt >= 3 {
+				ACnt += (cnt - 2)
+			}
+			i = j
+			continue
+		}
+		if colors[i] == 'B' {
+			cnt := 0
+			j := 0
+			for j = i; j < l && colors[j] == 'B'; j++ {
+				cnt++
+			}
+			if cnt >= 3 {
+				BCnt += (cnt - 2)
+			}
+			i = j
+			continue
+		}
+	}
+	if ACnt == BCnt {
+		return false // Bob wins ; if both are same count, then B plays last and A cannot make any move
+	}
+	if BCnt > ACnt {
+		return false
+	}
+	return true
+}

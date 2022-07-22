@@ -913,3 +913,52 @@ func TestOrangesRotting4(t *testing.T) {
 	}
 
 }
+
+func TestNumberOfPairs(t *testing.T) {
+	input := [][]int{
+		{2, 1, 1}, {1, 1, 1}, {0, 1, 2}, {1, 3, 2, 1, 3, 2, 2}, {1, 1}, {0},
+	}
+	output := [][]int{
+		{1, 1}, {1, 1}, {0, 3}, {3, 1}, {1, 0}, {0, 1},
+	}
+
+	for i := 0; i < len(input); i++ {
+		res := leet.NumberOfPairs(input[i])
+		if !CompareArrayValues(res, output[i]) {
+			t.Errorf("Expected %v, got %v", output[i], res)
+		}
+	}
+
+}
+
+func TestMaximumSum(t *testing.T) {
+	input := [][]int{
+		{18, 43, 36, 13, 7}, {10, 12, 19, 14},
+		{229, 398, 269, 317, 420, 464, 491, 218, 439, 153, 482, 169, 411, 93, 147, 50, 347, 210, 251, 366, 401},
+	}
+	output := []int{
+		54, -1, 973,
+	}
+
+	for i := 0; i < len(input); i++ {
+		res := leet.MaximumSum(input[i])
+		if res != output[i] {
+			t.Errorf("Expected %v, got %v", output[i], res)
+		}
+	}
+}
+
+func TestFillCups(t *testing.T) {
+	input := [][]int{
+		{5, 4, 4}, {1, 4, 2}, {0, 0, 0},
+	}
+	output := []int{
+		7, 4, 0,
+	}
+	for i := 0; i < len(input); i++ {
+		res := leet.FillCups(input[i])
+		if res != output[i] {
+			t.Errorf("Expected %v, got %v", output[i], res)
+		}
+	}
+}

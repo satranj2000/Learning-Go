@@ -38,6 +38,40 @@ type ListNode struct {
 	Next *ListNode
 }
 
+func setupListNode(val int) ListNode {
+	var n ListNode = ListNode{Val: val, Next: nil}
+	return n
+}
+
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	var extra = 0
+	newListHead := &ListNode{Val: 0, Next: nil}
+	var curr *ListNode = newListHead
+	for (l1 != nil) || (l2 != nil) {
+		var l1val int = 0
+		var l2val int = 0
+		if l1 != nil {
+			l1val = l1.Val
+			l1 = l1.Next
+		}
+		if l2 != nil {
+			l2val = l2.Val
+			l2 = l2.Next
+		}
+		var sum int = l1val + l2val + extra
+		extra = sum / 10
+		sum = sum % 10
+		tempNode := &ListNode{Val: sum, Next: nil}
+		curr.Next = tempNode
+		curr = tempNode
+	}
+	if extra > 0 {
+		tempNode := &ListNode{Val: extra, Next: nil}
+		curr.Next = tempNode
+	}
+	return newListHead.Next
+}
+
 //https://leetcode.com/problems/reverse-linked-list/
 func ReverseList(head *ListNode) *ListNode {
 

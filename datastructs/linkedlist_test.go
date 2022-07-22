@@ -5,6 +5,118 @@ import (
 	"testing"
 )
 
+func TestAddTwoNumbers(t *testing.T) {
+	l1 := ListNode{Val: 1, Next: nil}
+	node2 := ListNode{Val: 2, Next: nil}
+	node3 := ListNode{Val: 3, Next: nil}
+	l1.Next = &node2
+	node2.Next = &node3
+
+	l2 := ListNode{Val: 1, Next: nil}
+	node21 := ListNode{Val: 2, Next: nil}
+	node31 := ListNode{Val: 3, Next: nil}
+	l2.Next = &node21
+	node21.Next = &node31
+
+	res := addTwoNumbers(&l1, &l2)
+	outputRes := res.AsArray()
+	output := []int{2, 4, 6}
+
+	if !CompareArrays(output, outputRes) {
+		t.Errorf("Expected %v, got %v", output, outputRes)
+	}
+}
+
+func TestAddTwoNumbers2(t *testing.T) {
+	l1 := ListNode{Val: 0, Next: nil}
+
+	l2 := ListNode{Val: 1, Next: nil}
+
+	res := addTwoNumbers(&l1, &l2)
+	outputRes := res.AsArray()
+	output := []int{1}
+
+	if !CompareArrays(output, outputRes) {
+		t.Errorf("Expected %v, got %v", output, outputRes)
+	}
+}
+
+func TestAddTwoNumbers3(t *testing.T) {
+	l1 := ListNode{Val: 2, Next: nil}
+	node2 := ListNode{Val: 4, Next: nil}
+	node3 := ListNode{Val: 3, Next: nil}
+	l1.Next = &node2
+	node2.Next = &node3
+
+	l2 := ListNode{Val: 5, Next: nil}
+	node21 := ListNode{Val: 6, Next: nil}
+	node31 := ListNode{Val: 4, Next: nil}
+	l2.Next = &node21
+	node21.Next = &node31
+
+	res := addTwoNumbers(&l1, &l2)
+	outputRes := res.AsArray()
+	output := []int{7, 0, 8}
+
+	if !CompareArrays(output, outputRes) {
+		t.Errorf("Expected %v, got %v", output, outputRes)
+	}
+}
+
+func TestAddTwoNumbers4(t *testing.T) {
+	l1 := ListNode{Val: 9, Next: nil}
+	node2 := ListNode{Val: 9, Next: nil}
+	node3 := ListNode{Val: 9, Next: nil}
+	l1.Next = &node2
+	node2.Next = &node3
+
+	l2 := ListNode{Val: 9, Next: nil}
+	node21 := ListNode{Val: 9, Next: nil}
+	node31 := ListNode{Val: 9, Next: nil}
+	l2.Next = &node21
+	node21.Next = &node31
+
+	res := addTwoNumbers(&l1, &l2)
+	outputRes := res.AsArray()
+	output := []int{8, 9, 9, 1}
+
+	if !CompareArrays(output, outputRes) {
+		t.Errorf("Expected %v, got %v", output, outputRes)
+	}
+}
+
+func TestAddTwoNumbers5(t *testing.T) {
+	l1 := ListNode{Val: 9, Next: nil}
+	node2 := ListNode{Val: 9, Next: nil}
+	node3 := ListNode{Val: 9, Next: nil}
+	node4 := ListNode{Val: 9, Next: nil}
+	node5 := ListNode{Val: 9, Next: nil}
+	node6 := ListNode{Val: 9, Next: nil}
+	node7 := ListNode{Val: 9, Next: nil}
+	l1.Next = &node2
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
+	node5.Next = &node6
+	node6.Next = &node7
+
+	l2 := ListNode{Val: 9, Next: nil}
+	node21 := ListNode{Val: 9, Next: nil}
+	node31 := ListNode{Val: 9, Next: nil}
+	node41 := ListNode{Val: 9, Next: nil}
+	l2.Next = &node21
+	node21.Next = &node31
+	node31.Next = &node41
+
+	res := addTwoNumbers(&l1, &l2)
+	outputRes := res.AsArray()
+	output := []int{8, 9, 9, 9, 0, 0, 0, 1}
+
+	if !CompareArrays(output, outputRes) {
+		t.Errorf("Expected %v, got %v", output, outputRes)
+	}
+}
+
 func TestOddEvenList(t *testing.T) {
 	head := ListNode{Val: 1, Next: nil}
 	node2 := ListNode{Val: 2, Next: nil}

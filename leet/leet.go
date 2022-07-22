@@ -1870,3 +1870,87 @@ func OrangesRotting(grid [][]int) int {
 	}
 	return cnt
 }
+
+//https://leetcode.com/problems/maximum-number-of-pairs-in-array/
+func NumberOfPairs(nums []int) []int {
+	mapSize := make(map[int]int)
+	for i := 0; i < len(nums); i++ {
+		if _, ok := mapSize[nums[i]]; ok {
+			mapSize[nums[i]]++
+		} else {
+			mapSize[nums[i]] = 1
+		}
+	}
+	cnt1 := 0
+	cnt2 := 0
+	for _, v := range mapSize {
+		rem := v % 2
+		if rem > 0 {
+			cnt1++
+		}
+		rem = v / 2
+		cnt2 += rem
+	}
+
+	return []int{cnt2, cnt1}
+}
+
+func individualSum(num int) int {
+	remainder := 0
+	sumResult := 0
+	for num != 0 {
+		remainder = num % 10
+		sumResult += remainder
+		num = num / 10
+	}
+	return sumResult
+}
+
+//https://leetcode.com/problems/max-sum-of-a-pair-with-equal-sum-of-digits/
+func MaximumSum(nums []int) int {
+	mapSize := make(map[int][]int)
+	for i := 0; i < len(nums); i++ {
+		idsum := individualSum(nums[i])
+		if _, ok := mapSize[idsum]; ok {
+			mapSize[idsum] = append(mapSize[idsum], nums[i])
+		} else {
+			mapSize[idsum] = make([]int, 1, 2)
+			mapSize[idsum][0] = nums[i]
+		}
+	}
+	max := -1
+	for _, v := range mapSize {
+		if len(v) > 1 {
+			sort.Ints(v)
+			l := len(v)
+			newsum := v[l-1] + v[l-2]
+			if newsum > max {
+				max = newsum
+			}
+		}
+	}
+	return max
+}
+
+func FillCups(amount []int) int {
+	loop := 0
+	twozeroes := false
+	if amount[0] == 0 && amount[1] == 0 {
+		twozeroes = true
+	}
+	for !twozeroes {
+		sort.Ints(amount)
+		if amount[2] != 0 {
+			amount[2]--
+		}
+		if amount[1] != 0 {
+			amount[1]--
+		}
+		loop++
+		if amount[0] == 0 && amount[1] == 0 {
+			twozeroes = true
+		}
+	}
+	loop += amount[2]
+	return loop
+}

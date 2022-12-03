@@ -962,3 +962,90 @@ func TestFillCups(t *testing.T) {
 		}
 	}
 }
+
+func TestRepeatedCharacter(t *testing.T) {
+
+	inputs := []string{"hello", "there", "abccbaacz", "abcdd", "aaaa"}
+	outputs := []byte{'l', 'e', 'c', 'd', 'a'}
+	for i, v := range inputs {
+		res := leet.RepeatedCharacter(v)
+		if res != outputs[i] {
+			t.Errorf("Expected %v, got %v", outputs[i], res)
+		}
+	}
+
+}
+
+func TestEqualPairs(t *testing.T) {
+	inputs := [][][]int{
+		{{1, 2}, {2, 3}},
+		{{3, 2, 1}, {1, 7, 6}, {2, 7, 7}},
+		{{3, 1, 2, 2}, {1, 4, 4, 5}, {2, 4, 2, 2}, {2, 4, 2, 2}},
+		{{11, 1}, {1, 11}},
+	}
+	outputs := []int{2, 1, 3, 2}
+
+	for i, input := range inputs {
+		res := leet.EqualPairs(input)
+		if res != outputs[i] {
+			t.Errorf("Expected %v, got %v", outputs[i], res)
+		}
+	}
+}
+
+func TestLargestLocal(t *testing.T) {
+	input := [][]int{{9, 9, 8, 1}, {5, 6, 2, 6}, {8, 2, 6, 4}, {6, 2, 2, 2}}
+
+	output := [][]int{{9, 9}, {8, 6}}
+
+	out := leet.LargestLocal(input)
+
+	if !Compare2dArrayValues(output, out) {
+		t.Errorf("not equal, got %v", out)
+	}
+
+}
+
+func TestLargestLocal2(t *testing.T) {
+	input := [][]int{{1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 2, 1, 1}, {1, 1, 1, 1, 1}, {1, 1, 1, 1, 1}}
+
+	output := [][]int{{2, 2, 2}, {2, 2, 2}, {2, 2, 2}}
+
+	out := leet.LargestLocal(input)
+
+	if !Compare2dArrayValues(output, out) {
+		t.Errorf("not equal, got %v", out)
+	}
+
+}
+
+func TestPivotIndex(t *testing.T) {
+	inputs := [][]int{
+		{1, 7, 3, 6, 5, 6},
+		{1, 2, 3},
+	}
+	outputs := []int{3, -1}
+
+	for i, input := range inputs {
+		out := leet.PivotIndex(input)
+		if out != outputs[i] {
+			t.Errorf("expected %v, got %v", outputs[i], out)
+		}
+	}
+}
+
+func TestArithmeticTriplets(t *testing.T) {
+	inputs := [][]int{
+		{0, 1, 4, 6, 7, 10},
+		{4, 5, 6, 7, 8, 9},
+	}
+	diffs := []int{3, 2}
+	outputs := []int{2, 2}
+
+	for i, input := range inputs {
+		out := leet.ArithmeticTriplets(input, diffs[i])
+		if out != outputs[i] {
+			t.Errorf("expected %v, got %v", outputs[i], out)
+		}
+	}
+}

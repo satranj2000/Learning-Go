@@ -2,6 +2,7 @@ package leet
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"math"
 	"math/rand"
@@ -1953,4 +1954,144 @@ func FillCups(amount []int) int {
 	}
 	loop += amount[2]
 	return loop
+}
+
+//https://leetcode.com/problems/first-letter-to-appear-twice/
+func RepeatedCharacter(s string) byte {
+	mapStrCnt := make(map[rune]int)
+	for _, ch := range s {
+		if _, ok := mapStrCnt[ch]; ok {
+			return byte(ch)
+		} else {
+			mapStrCnt[ch] = 1
+		}
+	}
+	return byte(0)
+}
+
+//https://leetcode.com/problems/equal-row-and-column-pairs/
+func EqualPairs(grid [][]int) int {
+	mapRow := make(map[string]int)
+	for _, r := range grid {
+		str := ""
+		for _, c := range r {
+			str += fmt.Sprintf("%v_", c)
+		}
+		if _, ok := mapRow[str]; ok {
+			mapRow[str]++
+		} else {
+			mapRow[str] = 1
+		}
+	}
+	cnt := 0
+	for c := 0; c < len(grid[0]); c++ {
+		str := ""
+		for r := 0; r < len(grid[0]); r++ {
+			str += fmt.Sprintf("%v_", grid[r][c])
+		}
+		if _, ok := mapRow[str]; ok {
+			cnt += mapRow[str]
+		}
+	}
+	return cnt
+}
+
+func LargestLocal(grid [][]int) [][]int {
+	r := len(grid)
+	c := len(grid[0])
+
+	//initialize the result array
+	res := make([][]int, r-2)
+	for i := range res {
+		res[i] = make([]int, c-2)
+	}
+	i1 := 0
+	j1 := 0
+	for i := 0; i < r-2; i++ {
+		for j := 0; j < c-2; j++ {
+			currval := GetMaxGridValue(grid[i:i+3], j)
+			res[i1][j1] = currval
+			j1++
+		}
+		i1++
+		j1 = 0
+	}
+	return res
+}
+
+func GetMaxGridValue(grid [][]int, start int) int {
+	max := 0
+	for i := 0; i < len(grid); i++ {
+		for j := start; j < 3+start; j++ {
+			if grid[i][j] > max {
+				max = grid[i][j]
+			}
+		}
+	}
+	return max
+}
+
+//https://leetcode.com/problems/find-pivot-index/
+func PivotIndex(nums []int) int {
+	l := len(nums)
+	lside := make([]int, l)
+	rside := make([]int, l)
+	prevsum := 0
+	for i := 0; i < l; i++ {
+		if i == 0 {
+			lside[i] = 0
+		} else {
+			lside[i] = nums[i-1] + prevsum
+			prevsum = lside[i]
+		}
+	}
+
+	prevsum = 0
+	for i := l - 1; i >= 0; i-- {
+		if i == l-1 {
+			rside[i] = 0
+		} else {
+			rside[i] = nums[i+1] + prevsum
+			prevsum = rside[i]
+		}
+	}
+
+	for i := 0; i < l; i++ {
+		if lside[i] == rside[i] {
+			return i
+		}
+	}
+	return -1
+}
+
+//https://leetcode.com/problems/number-of-arithmetic-triplets/
+func ArithmeticTriplets(nums []int, diff int) int {
+
+	cnt := 0
+
+	for i := 0; i < len(nums); i++ {
+		for j := i + 1; j < len(nums); j++ {
+			if nums[j]-nums[i] < diff {
+				continue
+			}
+			if nums[j]-nums[i] > diff {
+				break
+			}
+			if nums[j]-nums[i] == diff {
+				breakout := false
+				for k := j + 1; k < len(nums); k++ {
+					if nums[k]-nums[j] == diff {
+						cnt++
+						breakout = true
+						break
+					}
+				}
+				if breakout {
+					break
+				}
+			}
+		}
+	}
+
+	return cnt
 }

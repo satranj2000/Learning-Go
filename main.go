@@ -1,6 +1,10 @@
 package main
 
-import "sathish.com/gomod/datastructs"
+import (
+	"fmt"
+
+	"sathish.com/gomod/datastructs"
+)
 
 func main() {
 	//fmt.Println(first.Getmascot())
@@ -203,6 +207,21 @@ func main() {
 	singlelinkedlist.Add(1)
 	singlelinkedlist.Add(2)
 	singlelinkedlist.Add(3)
-	singlelinkedlist.ListAll()
+	//singlelinkedlist.ListAll()
 
+	grid := [][]int{{1, 2, 3, 4, 5},
+		{6, 7, 8, 9, 10},
+		{11, 12, 13, 14, 15}}
+
+	print2d(grid)
+	print2d(grid[1:2])
+}
+
+func print2d(grid [][]int) {
+	for i := 0; i < len(grid); i++ {
+		for j := 0; j < len(grid[i]); j++ {
+			fmt.Printf("%v,", grid[i][j])
+		}
+		println()
+	}
 }
